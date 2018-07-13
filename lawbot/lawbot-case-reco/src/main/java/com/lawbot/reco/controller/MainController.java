@@ -1,5 +1,6 @@
 package com.lawbot.reco.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class MainController {
 	@PostMapping("case-keys")
 	public Result calcFactor(@RequestBody(required = true) Map<String, Object> params){
 		List<String> factors = aiService.getCaseKeys(params);
-		
+		//List<String> factors = Arrays.asList("被告因工程或业务对原告借款","双方约定借款利息","由被告提供担保向原告借款","双方约定还款期限");
 		return Result.success(new Result.ResultData("caseKeys", factors));
 	}
 	

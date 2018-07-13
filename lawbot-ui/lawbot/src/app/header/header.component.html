@@ -38,9 +38,11 @@
 			
 			
 			<li class="nav_title"><a routerLink="about" id="aboutId"><span>关于我们</span></a></li>
-			<li class="nav_title pull-right">
-				<a *ngIf="code != 200" [href]="loginUrl">Login</a>
-				<a [href]="logoutUrl" *ngIf="code == 200">{{user.username}}</a>
+			<li class="nav_title pull-right login" *ngIf="code != 200">
+				<a  [href]="loginUrl">Login</a>
+			</li>
+			<li class="nav_title pull-right account" *ngIf="code == 200">
+				<a [href]="logoutUrl"><span>{{user.username}}</span></a>
 			</li>
 		</ul>
 	</div>

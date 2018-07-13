@@ -1,3 +1,7 @@
+.account:hover > .dropdown-menu{
+    display: block !important;
+}
+
 #head {
 	background-color: #708090;
 	height: 70px;
