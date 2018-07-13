@@ -1,0 +1,47 @@
+<div id="head">
+	<div class="head_box">
+		<div class="logo" onclick="window.location.href='index.jsp'">Law Bot<p style="padding:0 0 0 20px;">法律机器人</p></div>
+		<ul class="nav">
+			<li class="nav_title"><a class="active" routerLink="/" id="indexId"><span>首页</span></a></li>
+			<li class="nav_title"><a routerLink="product" id="productId"><span>产品</span></a></li>
+			
+			<li class="nav_title" id="experience">
+				<a href="reco" id="aiId">AI案件分析</a>
+				<div class="menu">
+					<ul>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">民间借贷</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">买卖合同</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">金融、投资</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">知识产权</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">诉讼、仲裁</span></a>
+						</li>
+						<li class="menu_title tslss last">
+							<a href="javascript:;"><span class="cld">房地产</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">海事物流</span></a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="nav_title"><a href="#" (click)="$event.preventDefault();openLawbot()"><span>法律Chatbot</span></a></li>
+			<li class="nav_title"><a routerLink="adju" id="adjuId"><span>AI裁决书</span></a></li>
+			
+			
+			<li class="nav_title"><a routerLink="about" id="aboutId"><span>关于我们</span></a></li>
+			<li class="nav_title pull-right">
+				<a *ngIf="code != 200" [href]="loginUrl">Login</a>
+				<a [href]="logoutUrl" *ngIf="code == 200">{{user.username}}</a>
+			</li>
+		</ul>
+	</div>
+</div>

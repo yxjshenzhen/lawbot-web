@@ -1,0 +1,14 @@
+/lawbot/.mvn
+.settings
+/lawbot/target
+/lawbot/.classpath
+/lawbot/.project
+/lawbot/lawbot-sys/target
+/lawbot/lawbot-case-reco/target
+/lawbot/lawbot-common/.classpath
+/lawbot/lawbot-sys/.project
+/lawbot/lawbot-sys/.classpath
+/lawbot/lawbot-common/target
+/lawbot/lawbot-common/.project
+/lawbot/lawbot-case-reco/.classpath
+/lawbot/lawbot-case-reco/.project
