@@ -1,0 +1,104 @@
+<!-- 标题栏下 ，左右面板-->
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title">案例分析</h4>
+          </div>
+          <div class="panel-body">
+            <form role="form" onclick="return false">
+              <div class="form-group">
+                <textarea  class="form-control" name="caseText" class="case-content" [(ngModel)]="caseText" ></textarea>
+              </div>                       
+            </form> 
+            <div class="btn-group pull-right">        
+              <button class="btn btn-primary" (click)="analyze();" [disabled]="caseText.length <= 0">分析</button>
+            </div> 
+          </div>   
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title">关键因子</h4>
+          </div>
+          <div class="panel-body">
+              <p *ngIf="factors.length <= 0">暂无数据...</p>
+              <app-loading *ngIf="caseKeysLoading"></app-loading>
+              <p *ngFor="let f of factors;let i = index">{{i + 1}}. {{f}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="caseLoading > 0">
+      <app-loading></app-loading>
+    </div>
+    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+      <div>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th style="width:5%">勾选</th>
+              <th style="width:5%">序号</th>
+              <th style="width:45%">引用规则</th>
+              <th style="width:22%">引用法条</th>
+              <th style="width:23%">关键因子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of rules">
+              <td>
+                <input type="checkbox" name="rule_ck"/>
+              </td>
+              <td>{{r.order_no}}</td>
+              <td>{{r.rule_content}}</td>
+              <td>{{r.law}}</td>
+              <td>{{r.keys}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+      <ul class="nav nav-tabs">
+        <li [ngClass]="{'active': caseTabIndex == 0}"><a href="#" (click)="caseTabClick($event,0)" ><h5>案例统计</h5></a></li>
+        <li [ngClass]="{'active': caseTabIndex == 4}"><a href="#" (click)="caseTabClick($event,4)" ><h5>最高法院案例推送</h5></a></li>
+        <li [ngClass]="{'active': caseTabIndex == 3}"><a href="#" (click)="caseTabClick($event,3)" ><h5>高级法院案例推送</h5></a></li>
+        <li [ngClass]="{'active': caseTabIndex == 2}"><a href="#" (click)="caseTabClick($event,2)"><h5>中级法院案例推送</h5></a></li>
+        <li [ngClass]="{'active': caseTabIndex == 1}"><a href="#" (click)="caseTabClick($event,1)"><h5>基层法院案例推送</h5></a></li>
+      </ul>
+      <div *ngIf="caseTabIndex == 0">
+        echarts
+      </div>
+      <div *ngIf="caseTabIndex > 0">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th style="width:5%">排名</th>
+              <th style="width:25%">案名</th>
+              <th style="width:10%">法条</th>
+              <th style="width:30%">关键因子</th>
+              <th style="width:10%">引用规则</th>
+              <th style="width:10%">审理日期</th>
+              <th style="width:10%">操作</th>								
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of activeCase">
+              <td>{{c.order_no}}</td>
+              <td>{{c.case_name}}</td>
+              <td>{{c.court_decision}}</td>
+              <td [innerHTML]="c.case_keys"></td>
+              <td>{{c.court_hear}}</td>
+              <td>{{c.case_date}}</td>
+              <td>{{c.case_content}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+    </div>
+  </div>
+</div>
+

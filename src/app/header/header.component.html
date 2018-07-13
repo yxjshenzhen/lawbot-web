@@ -1,0 +1,77 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand hidden-sm" href="/">{{nav.title}}</a>
+		</div>
+		<div class="navbar-collapse collapse" role="navigation">
+			<ul class="nav navbar-nav">
+				<li *ngFor="let n of nav.menus"><a [href]="n.url">{{n.title}}</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right hidden-sm">
+				<li class="account">
+					<a *ngIf="code != 200" [href]="loginUrl">
+						<span>Login</span>
+					</a>
+					<a [href]="logoutUrl" *ngIf="code == 200">
+						<span>{{user.username}}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!--<div id="head">
+	<div class="head_box">
+		<div class="logo" onclick="window.location.href='index.jsp'">Law Bot<p style="padding:0 0 0 20px;">法律机器人</p></div>
+		<ul class="nav">
+			<li class="nav_title"><a class="active" href="/" id="indexId"><span>首页</span></a></li>
+			<li class="nav_title"><a href="/#/product" id="productId"><span>产品</span></a></li>
+			
+			<li class="nav_title" id="experience">
+				<a href="#" id="aiId">AI案件分析</a>
+				<div class="menu">
+					<ul>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">民间借贷</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">买卖合同</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">金融、投资</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">知识产权</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">诉讼、仲裁</span></a>
+						</li>
+						<li class="menu_title tslss last">
+							<a href="javascript:;"><span class="cld">房地产</span></a>
+						</li>
+						<li class="menu_title tslss">
+							<a href="javascript:;"><span class="cld">海事物流</span></a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="nav_title"><a href="#" (click)="$event.preventDefault();openLawbot()"><span>法律Chatbot</span></a></li>
+			<li class="nav_title"><a href="/#/adju" id="adjuId"><span>AI裁决书</span></a></li>
+			
+			
+			<li class="nav_title"><a href="/#/about" id="aboutId"><span>关于我们</span></a></li>
+
+			<li class="nav_title pull-right">
+				<a *ngIf="code != 200" [href]="loginUrl">Login</a>
+				<a [href]="logoutUrl" *ngIf="code == 200">{{user.username}}</a>
+			</li>
+			
+		</ul>
+	</div>
+</div>-->

@@ -1,0 +1,16 @@
+{
+    "/reco/api": {
+      "target": "http://localhost:5200",
+      "secure": false,
+      "pathRewrite": {
+        "^/reco/api": ""
+      }
+    },
+    "/account": {
+      "target": "http://localhost:5201",
+      "secure": false,
+      "pathRewrite": {
+        "^/account": "/user"
+      }
+    }
+  }
