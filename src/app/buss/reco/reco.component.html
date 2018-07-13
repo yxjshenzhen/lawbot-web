@@ -36,29 +36,37 @@
       <app-loading></app-loading>
     </div>
     <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
-      <div>
-        <table class="table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th style="width:5%">勾选</th>
-              <th style="width:5%">序号</th>
-              <th style="width:45%">引用规则</th>
-              <th style="width:22%">引用法条</th>
-              <th style="width:23%">关键因子</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let r of rules">
-              <td>
-                <input type="checkbox" name="rule_ck"/>
-              </td>
-              <td>{{r.order_no}}</td>
-              <td>{{r.rule_content}}</td>
-              <td>{{r.law}}</td>
-              <td>{{r.keys}}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-info" >
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a href="#" (click)="$event.preventDefault();ruleCollapse = !ruleCollapse">引用规则</a></h4>
+          </div>
+          <div class="panel-body" [ngClass]="{'collapse': ruleCollapse}">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th style="width:5%">勾选</th>
+                  <th style="width:5%">序号</th>
+                  <th style="width:45%">引用规则</th>
+                  <th style="width:22%">引用法条</th>
+                  <th style="width:23%">关键因子</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let r of rules">
+                  <td>
+                    <input type="checkbox" name="rule_ck"/>
+                  </td>
+                  <td>{{r.order_no}}</td>
+                  <td><div class="eclipse">{{r.rule_content}}</div></td>
+                  <td><div class="" *ngFor="let l of r.law" title="{{l.content}}">{{l.title}}</div></td>
+                  <td><div class="">{{r.keys}}</div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
@@ -89,11 +97,13 @@
             <tr *ngFor="let c of activeCase">
               <td>{{c.order_no}}</td>
               <td>{{c.case_name}}</td>
-              <td>{{c.court_decision}}</td>
-              <td [innerHTML]="c.case_keys"></td>
-              <td>{{c.court_hear}}</td>
+              <td><button class="btn btn-primary">引用法条</button></td>
+              <td>
+                <div class="eclipse" *ngFor="let k of c.case_keys; let i = $index" [innerHTML]="k"></div>
+              </td>
+              <td><button class="btn btn-primary">引用规则</button></td>
               <td>{{c.case_date}}</td>
-              <td>{{c.case_content}}</td>
+              <td><button class="btn btn-danger" (click)="modalData.caseContent = c.case_content;openModal(caseContent)">案件明细</button></td>
             </tr>
           </tbody>
         </table>
@@ -101,4 +111,16 @@
     </div>
   </div>
 </div>
+
+<ng-template #caseContent>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">案件明细</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <pre>{{modalData.caseContent}}</pre>
+    </div>
+  </ng-template>
 

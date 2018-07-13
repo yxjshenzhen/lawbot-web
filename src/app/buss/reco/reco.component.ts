@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,TemplateRef  } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { RecoService } from "../reco.service";
 
@@ -9,9 +11,19 @@ import { RecoService } from "../reco.service";
 })
 export class RecoComponent implements OnInit {
 
-  constructor(private recoService: RecoService) { }
+  constructor(private recoService: RecoService,private modalService: BsModalService) { }
 
-  caseText: string = "2008年9月10日，被告贺麒麟因做生意需要资金向原告王燕芬借款210万元，双方约定利息按月利率4.5%计算。2009年8月30日，被告贺伟峰为借款作了担保，约定2013年后还款。同日，被告出具借条。后被告贺麒麟未按照约定支付利息，原告多次催讨无果。现原告诉至法院要求：被告支付之前拖欠的利息，被告支付逾期利息1万元，被告承担律师代理费，被告承担诉讼费。";
+  modalRef: BsModalRef;
+
+  eleStates: any ={
+    ruleCollapse: false
+  }
+
+  modalData: any = {
+    caseContent: ''
+  }
+
+  caseText: string = "2008年9月10日，被告贺麒麟因做生意需要资金向原告王燕芬借款210万元，双方约定利息按月利率4.5%计算。";
   showFactors: boolean = false;
   caseKeysLoading: boolean = false;
   caseLoading = 0;
@@ -31,6 +43,10 @@ export class RecoComponent implements OnInit {
   activeCase:any = [];
 
   ngOnInit() {
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   caseTabClick(e , i){
@@ -61,7 +77,19 @@ export class RecoComponent implements OnInit {
     this.recoService.getCaseRules(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
-        this.rules = data.caseRules.rules;
+        this.rules = data.caseRules.rules.map(rule=>{
+          if(rule.law){
+            let laws = rule.law.split('\r\n');
+            rule.law = laws.map(law => {
+              return {
+                title: law.substr(0 , law.indexOf(":")),
+                content: law
+              }
+            });
+          }
+          
+          return rule;
+        });
       }else{
         alert(res.message);
       }

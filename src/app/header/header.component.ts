@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit {
     },{
       title: '产品', url: '/#/product'
     },{
-      title: 'AI案例分析', url: '/reco/#/'
+      title: 'AI案件分析', url: '/reco/#/'
     },{
-      title: '法律Chatbot', url: '/'
+      title: '法律Chatbot', chatbot: true
     },{
       title: 'AI裁决书', url: '/#/adju'
     },{
