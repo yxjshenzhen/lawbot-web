@@ -3,7 +3,14 @@
     height: 100%;
     overflow: auto;
 }
+.case-row .panel-body{
+    height: 284px;
+    overflow: auto;
+}
 .case-content{
     min-height: 200px;
     width: 100%;
+}
+.laws > div:not(:last-child){
+    margin-bottom: 10px;
 }

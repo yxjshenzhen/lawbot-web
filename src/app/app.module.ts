@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,6 +16,7 @@ import { UserService } from "./common/service/user.service";
 import { RecoService } from "./buss/reco.service";
 import { LoadingComponent } from './common/loading/loading.component';
 import { RecoComponent } from './buss/reco/reco.component';
+import { DialogComponent } from './common/component/dialog.component';
 
 const appRoutes: Routes = [
   { 
@@ -56,6 +58,7 @@ const appRoutes: Routes = [
     HomeComponent,
     LoadingComponent,
     RecoComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,12 +71,16 @@ const appRoutes: Routes = [
         useHash: true 
       } 
     ),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxEchartsModule
   ],
   providers: [
     HomeService,
     UserService,
     RecoService
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   bootstrap: [AppComponent]
 })

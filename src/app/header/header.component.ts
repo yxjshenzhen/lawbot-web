@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) { }
   nav: any = {
-    title: '{Lawbot}',
+    title: '{LawBot}',
     menus: [{
       title: '首页', url: '/'
     },{

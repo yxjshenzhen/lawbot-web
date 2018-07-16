@@ -1,7 +1,7 @@
 <!-- 标题栏下 ，左右面板-->
 <div class="main">
   <div class="container">
-    <div class="row">
+    <div class="row case-row">
       <div class="col-lg-6 col-md-6 col-sm-12">
         <div class="panel panel-info">
           <div class="panel-heading">
@@ -14,7 +14,7 @@
               </div>                       
             </form> 
             <div class="btn-group pull-right">        
-              <button class="btn btn-primary" (click)="analyze();" [disabled]="caseText.length <= 0">分析</button>
+              <button class="btn btn-primary" (click)="analyze();" [disabled]="caseText.length <= 0 || caseKeysLoading || caseLoading > 0">分析</button>
             </div> 
           </div>   
         </div>
@@ -40,9 +40,9 @@
         <div class="panel panel-info" >
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a href="#" (click)="$event.preventDefault();ruleCollapse = !ruleCollapse">引用规则</a></h4>
+              <a href="#" (click)="$event.preventDefault();eleStates.ruleCollapse = !eleStates.ruleCollapse">引用规则</a></h4>
           </div>
-          <div class="panel-body" [ngClass]="{'collapse': ruleCollapse}">
+          <div class="panel-body" [ngClass]="{'collapse': eleStates.ruleCollapse}">
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
@@ -70,6 +70,44 @@
       </div>
     </div>
     <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-info" >
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a href="#" (click)="$event.preventDefault();eleStates.lawDescCollapse = !eleStates.lawDescCollapse">引用法律及司法解释</a></h4>
+          </div>
+          <div class="panel-body" [ngClass]="{'collapse': eleStates.lawDescCollapse}">
+            <div class="row">
+              <div class="col-md-4">
+                <h4>法律条文</h4>
+                <div class="laws">
+                  <div *ngFor="let l of laws.law0">
+                    <a href="#" (click)="$event.preventDefault(); showLawDetail(l ,'法律条文' ,lawDetailTpl)">{{l.lawFullName}}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h4>司法解释</h4>
+                <div class="laws">
+                  <div *ngFor="let l of laws.law1">
+                    <a href="#" (click)="$event.preventDefault();showLawDetail(l , '司法解释',lawDetailTpl)">{{l.lawFullName}}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h4>地方性文件</h4>
+                <div class="laws">
+                  <div *ngFor="let l of laws.law2">
+                    <a href="#" (click)="$event.preventDefault();showLawDetail(l ,'地方性文件',lawDetailTpl)">{{l.lawFullName}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
       <ul class="nav nav-tabs">
         <li [ngClass]="{'active': caseTabIndex == 0}"><a href="#" (click)="caseTabClick($event,0)" ><h5>案例统计</h5></a></li>
         <li [ngClass]="{'active': caseTabIndex == 4}"><a href="#" (click)="caseTabClick($event,4)" ><h5>最高法院案例推送</h5></a></li>
@@ -78,7 +116,32 @@
         <li [ngClass]="{'active': caseTabIndex == 1}"><a href="#" (click)="caseTabClick($event,1)"><h5>基层法院案例推送</h5></a></li>
       </ul>
       <div *ngIf="caseTabIndex == 0">
-        echarts
+        <div class="row">
+          <div class="col-md-12">
+            <span class="glyphicon glyphicon-bookmark"></span>
+            <label>法院等级:</label>
+            <label>
+              <input type="checkbox" name="courtLevel">最高法院
+            </label>
+            <label>
+              <input type="checkbox" name="courtLevel">高级法院
+            </label>
+            <label>
+              <input type="checkbox" name="courtLevel">中级法院
+            </label>
+            <label>
+              <input type="checkbox" name="courtLevel">基层法院
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div echarts [options]="geoOptions"></div>
+          </div>
+          <div class="col-md-6">
+            <div echarts [options]="pieOptions"></div>
+          </div>
+        </div>
       </div>
       <div *ngIf="caseTabIndex > 0">
         <table class="table table-hover table-bordered">
@@ -97,13 +160,13 @@
             <tr *ngFor="let c of activeCase">
               <td>{{c.order_no}}</td>
               <td>{{c.case_name}}</td>
-              <td><button class="btn btn-primary">引用法条</button></td>
+              <td><button class="btn btn-primary" (click)="showCaseLaws(c , caseRefTpl)">引用法条</button></td>
               <td>
                 <div class="eclipse" *ngFor="let k of c.case_keys; let i = $index" [innerHTML]="k"></div>
               </td>
-              <td><button class="btn btn-primary">引用规则</button></td>
+              <td><button class="btn btn-primary" (click)="showCaseRules(c , caseRulesTpl)">引用规则</button></td>
               <td>{{c.case_date}}</td>
-              <td><button class="btn btn-danger" (click)="modalData.caseContent = c.case_content;openModal(caseContent)">案件明细</button></td>
+              <td><button class="btn btn-danger" (click)="showCaseDetail(c , caseTabIndex , caseContentTpl);">案件明细</button></td>
             </tr>
           </tbody>
         </table>
@@ -112,15 +175,118 @@
   </div>
 </div>
 
-<ng-template #caseContent>
+<ng-template #caseRefTpl>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">引用法条</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <h4>{{modalData.caseObj.case_name}}</h4>
+      <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th width="50px">序号</th><th width="250px">法条名称</th><th>法条内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of modalData.caselaws">
+              <td>{{r.order_no}}</td>
+              <td>{{r.law_name}}</td>
+              <td>{{r.law_content}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</ng-template>
+
+<ng-template #caseRulesTpl>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">案件明细</h4>
+      <h4 class="modal-title pull-left">引用规则</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <pre>{{modalData.caseContent}}</pre>
+      <h4>{{modalData.caseObj.case_name}}</h4>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th width="50px">序号</th><th>引用规则</th><th width="200px">引用法条</th><th width="200px">关键因子</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of modalData.caseRules">
+            <td>{{r.order_no}}</td>
+            <td>{{r.rule_content}}</td>
+            <td><div class="" *ngFor="let l of r.law" title="{{l.content}}">{{l.title}}</div></td>
+            <td><div class="pre">{{r.keys}}</div></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-template>
+
+<ng-template #caseContentTpl>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">案件明细</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h4>{{modalData.caseObj.case_name}}</h4>
+    <div *ngIf="modalData.index == 4">
+      <pre>{{modalData.caseObj.case_content}}</pre>
+    </div>
+    <div *ngIf="modalData.index < 4" class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">原告诉称</h4>
+            </div>
+            <div class="panel-body">
+              {{modalData.caseObj.case_content}}
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="panel panel-info">
+              <div class="panel-heading">
+                <h4 class="panel-title">法院判决</h4>
+              </div>
+              <div class="panel-body">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>法院审理意见</th><th>法院判决</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{modalData.caseObj.court_hear}}</td>
+                      <td>{{modalData.caseObj.court_decision}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #lawDetailTpl>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{lawModal.title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngFor="let d of lawModal.law.lawDetails">{{d.indexName}} {{d.lawDetail}}</p>
+  </div>
+</ng-template>
+
 

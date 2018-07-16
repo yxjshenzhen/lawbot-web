@@ -12,6 +12,7 @@
     border-right: 1px solid #dddddd;
     
 }
+
 .body > .right{
     width: 100%;
     height: 100%;
@@ -19,6 +20,15 @@
     padding-left: 250px;
     background: #fff;
 }
+@media (max-width: 1440px){
+    .body > .left{
+        width: 50px;
+    }
+    .body > .right{
+        padding-left: 50px;
+    }
+}
+
 .left > .header{
     padding: 10px 15px;
     color: #fff;

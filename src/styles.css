@@ -12,3 +12,6 @@ html,body{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
+.pre{
+    white-space: pre;
+}
