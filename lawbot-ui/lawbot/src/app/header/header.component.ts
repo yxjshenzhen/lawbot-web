@@ -9,7 +9,7 @@ import { UserService } from "../common/service/user.service";
 export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) { }
-
+  title = '{LawBot}'
   loginUrl:string = "";
   logoutUrl:String = "";
   user: any = {};

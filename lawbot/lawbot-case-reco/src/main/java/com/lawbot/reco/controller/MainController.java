@@ -1,6 +1,5 @@
 package com.lawbot.reco.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawbot.core.entity.result.Result;
+import com.lawbot.core.entity.result.ResultCode;
 import com.lawbot.core.entity.result.Result.ResultData;
-import com.lawbot.reco.dao.TestDao;
+import com.lawbot.reco.dao.LawDao;
 import com.lawbot.reco.remote.AIService;
+import com.lawbot.reco.service.RuleService;
 
 /**
  * 
@@ -28,8 +29,9 @@ public class MainController {
 	
 	@Autowired
 	private AIService aiService;
+	
 	@Autowired
-	private TestDao testDao;
+	private RuleService ruleService;
 
 	/**
 	 * 
@@ -39,7 +41,6 @@ public class MainController {
 	@PostMapping("case-keys")
 	public Result calcFactor(@RequestBody(required = true) Map<String, Object> params){
 		List<String> factors = aiService.getCaseKeys(params);
-		//List<String> factors = Arrays.asList("被告因工程或业务对原告借款","双方约定借款利息","由被告提供担保向原告借款","双方约定还款期限");
 		return Result.success(new Result.ResultData("caseKeys", factors));
 	}
 	
@@ -51,7 +52,10 @@ public class MainController {
 	
 	@PostMapping("case-rules")
 	public Result getCaseRules(@RequestBody(required = true) Map<String,Object> params){
-		return Result.success(new Result.ResultData("caseRules", aiService.getCaseRules(params)));
+		if(params.containsKey("keys") && params.get("keys") instanceof List){
+			return Result.success(new Result.ResultData("caseRules",ruleService.findWithLawByKeys((List)params.get("keys"))));
+		}
+		return Result.error(ResultCode.REQUEST_PARAMS_ERROR);
 	}
 	
 	@PostMapping("case-same")
@@ -62,11 +66,6 @@ public class MainController {
 	@GetMapping("case-detail/{caseId}")
 	public Object getCaseDetail(@PathVariable(required = true) String caseId){
 		return Result.success(new Result.ResultData("caseDetail",aiService.getCaseDetail(caseId)));
-	}
-	
-	@GetMapping("test")
-	public List<String> test(){
-		return testDao.test();
 	}
 	
 	

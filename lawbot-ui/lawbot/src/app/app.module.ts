@@ -45,7 +45,7 @@ const appRoutes: Routes = [
         enableTracing: true,// <-- debugging purposes only
         useHash: true 
       } 
-    )
+    ),
   ],
   providers: [
     UserService

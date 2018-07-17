@@ -14,10 +14,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lawbot.reco.dao.TestDao">
+<mapper namespace="com.lawbot.reco.dao.RuleDao">
+	<resultMap type="HashMap" id="RuleMap">
+		<id property="ruleId" column="rule_id" />
+		<result property="ruleContent" column="rule_content"/>
+		<result property="ruleKeys" column="rule_keys"/>
+		<collection property="lawDetails" ofType="HashMap" javaType="ArrayList">
+			<result property="lawIndex" column="law_index"/>
+			<result property="lawDetail" column="law_detail"/>
+		</collection>
+	</resultMap>
 	
-    <select id="test" resultType="String">
-        select CHARACTER_SET_NAME from CHARACTER_SETS
+    <select id="findWithLawByKeys" resultMap="RuleMap">
+        SELECT
+			t3.*
+		FROM
+			s_key_info t1
+			JOIN t_rule_key t2 ON t1.key_id = t2.key_id
+			JOIN v_rule_detail t3 ON t2.rule_id = t3.rule_id 
+		WHERE
+			t1.key_content IN <foreach collection="caseKeys" item="key" open="(" close=")" separator=",">#{key}</foreach>
     </select>
     
 </mapper>

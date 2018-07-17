@@ -8,7 +8,12 @@ public enum ResultCode{
 	 * 用户错误
 	 */
 	USER_NOT_LOGIN(401 , "User not login"),
-	USER_PRIV_INSUFFICENT(402,"User privilege insufficent");
+	USER_PRIV_INSUFFICENT(402,"User privilege insufficent"),
+	
+	/**
+	 * 参数错误
+	 */
+	REQUEST_PARAMS_ERROR(501 , "Request parameters error");
 	
 	
 	private ResultCode(int code , String message){
