@@ -158,19 +158,7 @@ export class RecoComponent implements OnInit {
     this.recoService.getCaseRules(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
-        this.rules = data.caseRules.rules.map(rule=>{
-          if(rule.law){
-            let laws = rule.law.split('\r\n');
-            rule.law = laws.map(law => {
-              return {
-                title: law.substr(0 , law.indexOf(":")),
-                content: law
-              }
-            });
-          }
-          
-          return rule;
-        });
+        this.rules = data.caseRules;
       }
       this.caseLoading --;
     });

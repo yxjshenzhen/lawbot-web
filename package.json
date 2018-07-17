@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4201 --proxy-config proxy.conf.json --host lawbot.com --base-href=/reco/",
+    "start": "ng serve --port 80 --proxy-config proxy.conf.json --host lawbot.com --base-href=/reco/",
     "build": "ng build --prod --base-href=/reco/",
     "test": "ng test",
     "lint": "ng lint",

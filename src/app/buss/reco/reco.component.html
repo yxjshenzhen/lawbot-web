@@ -58,10 +58,10 @@
                   <td>
                     <input type="checkbox" name="rule_ck"/>
                   </td>
-                  <td>{{r.order_no}}</td>
-                  <td><div class="eclipse">{{r.rule_content}}</div></td>
-                  <td><div class="" *ngFor="let l of r.law" title="{{l.content}}">{{l.title}}</div></td>
-                  <td><div class="">{{r.keys}}</div></td>
+                  <td>{{r.orderNo}}</td>
+                  <td><div class="eclipse">{{r.ruleContent}}</div></td>
+                  <td class="laws"><div *ngFor="let l of r.lawDetails" title="{{l.lawDetail}}">{{l.lawIndex}}</div></td>
+                  <td><div class="pre">{{r.ruleKeys}}</div></td>
                 </tr>
               </tbody>
             </table>
@@ -74,12 +74,12 @@
         <div class="panel panel-info" >
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a href="#" (click)="$event.preventDefault();eleStates.lawDescCollapse = !eleStates.lawDescCollapse">引用法律及司法解释</a></h4>
+              <a href="#" (click)="$event.preventDefault();eleStates.lawDescCollapse = !eleStates.lawDescCollapse">引用相关法律、法规及司法解释</a></h4>
           </div>
           <div class="panel-body" [ngClass]="{'collapse': eleStates.lawDescCollapse}">
             <div class="row">
               <div class="col-md-4">
-                <h4>法律条文</h4>
+                <h4>法律、法规</h4>
                 <div class="laws">
                   <div *ngFor="let l of laws.law0">
                     <a href="#" (click)="$event.preventDefault(); showLawDetail(l ,'法律条文' ,lawDetailTpl)">{{l.lawFullName}}</a>
