@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     },{
       title: 'AI裁决书', url: '/award/#/'
     },{
-      title: 'AI合同', url: '/contract/'
+      title: 'AI合同', url: '/contract/',active: true
     },{
       title: '关于我们', url: '/#/about'
     }]

@@ -11,7 +11,7 @@
 		</div>
 		<div class="navbar-collapse collapse" role="navigation">
 			<ul class="nav navbar-nav">
-				<li *ngFor="let n of nav.menus">
+				<li *ngFor="let n of nav.menus" [class.active]="n.active">
 					<a *ngIf="n.url" [href]="n.url">{{n.title}}</a>
 					<a *ngIf="n.chatbot" href="#" (click)="$event.preventDefault();openLawbot()">{{n.title}}</a>
 				</li>
