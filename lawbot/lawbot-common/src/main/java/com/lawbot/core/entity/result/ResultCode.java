@@ -13,7 +13,15 @@ public enum ResultCode{
 	/**
 	 * 参数错误
 	 */
-	REQUEST_PARAMS_ERROR(501 , "Request parameters error");
+	REQUEST_PARAMS_ERROR(501 , "Request parameters error"),
+	
+	
+	/**
+	 * 其他错误
+	 */
+	OTHER_ERROR(601, "OTHER ERROR"),
+	UNKNOW_ERROR(602,"Unknow error");
+	
 	
 	
 	private ResultCode(int code , String message){

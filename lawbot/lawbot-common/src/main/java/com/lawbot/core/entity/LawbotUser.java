@@ -1,5 +1,6 @@
 package com.lawbot.core.entity;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,7 @@ public class LawbotUser implements Serializable{
 
 	private String username;
 	
+	
 	private int priv;
 	
 	private String uid;
@@ -38,6 +40,7 @@ public class LawbotUser implements Serializable{
 		this.username = username;
 	}
 
+	@Transient
 	public int getPriv() {
 		return priv;
 	}

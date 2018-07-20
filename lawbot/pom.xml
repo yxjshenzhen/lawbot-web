@@ -57,5 +57,7 @@
 		<module>lawbot-case-reco</module>
 		<module>lawbot-sys</module>
 		<module>lawbot-common</module>
+		<module>lawbot-case-award</module>
+		<module>lawbot-case-contract</module>
 	</modules>
 </project>

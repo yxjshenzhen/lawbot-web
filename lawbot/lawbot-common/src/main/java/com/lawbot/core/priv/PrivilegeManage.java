@@ -8,16 +8,16 @@ package com.lawbot.core.priv;
 public class PrivilegeManage {
 	public final static int RECO_PRIV = 1; // 同案推荐权限
 	
-	public final static int ADJUST_PRIV = RECO_PRIV << 1; // 裁决书
+	public final static int AWARD_PRIV = RECO_PRIV << 1; // 裁决书
 	
-	public final static int ROBOT_PRIV = ADJUST_PRIV << 1; //机器人
+	public final static int ROBOT_PRIV = AWARD_PRIV << 1; //机器人
 	
 	public final static int CONTRACT_PRIV = ROBOT_PRIV << 1;//合同比对
 	
 	private int accessPriv = 0; //
 	
 	{
-		accessPriv = RECO_PRIV + ADJUST_PRIV + ROBOT_PRIV + CONTRACT_PRIV;
+		accessPriv = RECO_PRIV + AWARD_PRIV + ROBOT_PRIV + CONTRACT_PRIV;
 	}
 	
 	public PrivilegeManage(){}
@@ -45,7 +45,7 @@ public class PrivilegeManage {
 		PrivilegeManage p = new PrivilegeManage(3);
 		
 		System.out.print(p.has(RECO_PRIV));
-		System.out.print(p.has(ADJUST_PRIV));
+		System.out.print(p.has(AWARD_PRIV));
 		System.out.print(p.has(ROBOT_PRIV));
 	}
 	

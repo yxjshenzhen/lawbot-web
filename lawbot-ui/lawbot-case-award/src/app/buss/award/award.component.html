@@ -1,0 +1,115 @@
+<div class="body">
+  <div class="left">
+    <div class="header">
+      <h4>AI裁决书</h4>
+    </div>
+    <div class="list-group">
+      <a routerLink="/mjjd" class="list-group-item" [class.active]="params.caseType=='mjjd'">
+        民间借贷
+      </a>
+      <a routerLink="/mmht" class="list-group-item" [class.active]="params.caseType=='mmht'">买卖合同</a>
+      <a routerLink="/jrtz" class="list-group-item" [class.active]="params.caseType=='jrtz'">金融、投资</a>
+      <a routerLink="/zscq" class="list-group-item" [class.active]="params.caseType=='zscq'">知识产权</a>
+      <a routerLink="/sszc" class="list-group-item" [class.active]="params.caseType=='sszc'">诉讼、仲裁</a>
+      <a routerLink="/fdc" class="list-group-item" [class.active]="params.caseType=='fdc'">房地产</a>
+      <a routerLink="/hswl" class="list-group-item" [class.active]="params.caseType=='hswl'">海事物流</a>
+    </div>
+  </div>
+  <div class="right">
+    <div class="container award">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>程序部分<span class="required">*</span></label>
+            <div class="row">
+              <div class="col-md-10">
+                <input type="text" class="form-control" readonly [value]="params.routineFile ? params.routineFile.name : ''"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn" (click)="routineFile.click()">选择文件</button>
+                <input type="file" name="routineFile" #routineFile class="sr-only" (change)="onAddSingleFile('routineFile',$event)">
+              </div>
+            </div>           
+          </div>
+          <div class="form-group">
+            <label>仲裁申请书<span class="required">*</span></label>
+            <div class="row">
+              <div class="col-md-10">
+                <input type="text" class="form-control" readonly [value]="params.appDocFile ? params.appDocFile.name : ''"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn" (click)="appDocFile.click()">选择文件</button>
+                <input type="file" name="appDocFile" #appDocFile class="sr-only" (change)="onAddSingleFile('appDocFile',$event)">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>申请人证据</label>
+            <div class="row">
+              <div class="col-md-10">
+                <ul class="list file">
+                  <li *ngFor="let f of params.eAppFiles; let i = $index">
+                    <span>{{f.name}}</span>
+                    <button type="button" class="close" aria-label="Close" (click)="onRemoveFiles(params.eAppFiles , f)"><span aria-hidden="true">&times;</span></button>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-2">
+                <button class="btn" (click)="eAppFile.click()">添加文件</button>
+                <input type="file" name="eAppFile" #eAppFile class="sr-only" (change)="onAddMultiFile(params.eAppFiles,$event)" multiple="multiple">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>答辩状<span class="required">*</span></label>
+            <div class="row">
+              <div class="col-md-10">
+                <input type="text" class="form-control" readonly [value]="params.resDocFile ? params.resDocFile.name : ''"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn" (click)="resDocFile.click()">选择文件</button>
+                <input type="file" name="resDocFile" #resDocFile class="sr-only" (change)="onAddSingleFile('resDocFile',$event)">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>被申请人证据</label>
+            <div class="row">
+              <div class="col-md-10">
+                <ul class="list file">
+                  <li *ngFor="let f of params.eResFiles; let i = $index">
+                    <span>{{f.name}}</span>
+                    <button type="button" class="close" aria-label="Close" (click)="onRemoveFiles(params.eResFiles , f)"><span aria-hidden="true">&times;</span></button>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-2">
+                <button class="btn" (click)="eResFile.click()">添加文件</button>
+                <input type="file" name="eResFile" #eResFile class="sr-only" (change)="onAddMultiFile(params.eResFiles,$event)" multiple="multiple">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row doc-response">
+              <div class="col-md-10">
+                <p class="bg-danger" *ngIf="docRes.errors.length > 0">
+                  <span *ngFor="let err of docRes.errors">{{err}}<br></span>
+                </p>
+                <p class="bg-warning" *ngIf="docRes.warns.length > 0">
+                  <span *ngFor="let warn of docRes.warns">{{warn}}<br></span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary" (click)="onGenerate()" [disabled]="!(params.caseType && params.routineFile && params.appDocFile && params.resDocFile)">生成裁决书</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

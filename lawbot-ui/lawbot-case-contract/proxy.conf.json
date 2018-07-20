@@ -1,0 +1,16 @@
+{
+    "/contract/api": {
+      "target": "http://localhost:5203",
+      "secure": false,
+      "pathRewrite": {
+        "^/contract/api": ""
+      }
+    },
+    "/account": {
+      "target": "http://localhost:5201",
+      "secure": false,
+      "pathRewrite": {
+        "^/account": "/user"
+      }
+    }
+}

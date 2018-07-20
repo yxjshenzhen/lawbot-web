@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawbot.core.entity.result.Result;
 import com.lawbot.core.entity.result.ResultCode;
-import com.lawbot.core.entity.result.Result.ResultData;
-import com.lawbot.reco.dao.LawDao;
 import com.lawbot.reco.remote.AIService;
 import com.lawbot.reco.service.RuleService;
 

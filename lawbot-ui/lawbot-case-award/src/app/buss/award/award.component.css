@@ -1,0 +1,88 @@
+.body{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 51px;
+}
+.body > .left{
+    width: 250px;
+    height: 100%;
+    float: left;
+    background: #3d3d3d!important;
+    border-right: 1px solid #dddddd;
+    
+}
+
+.body > .right{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 250px;
+    background: #fff;
+}
+@media (max-width: 1440px){
+    .body > .left{
+        width: 50px;
+    }
+    .body > .right{
+        padding-left: 50px;
+    }
+}
+.container.award{
+    width: 800px;
+    padding-top: 20px;
+}
+
+
+.left > .header{
+    padding: 10px 15px;
+    color: #fff;
+    background: #222222;
+}
+.left > .list-group{
+    
+}
+.list-group-item{
+    border-right-width: 0;
+    border-left-width: 0;
+    background: #3d3d3d !important;
+    color: #fff!important;
+    border-color: #5c5c5c !important;
+}
+.list-group-item.active{
+    background: #303033 !important;
+}
+
+
+.list-group-item:first-child,
+.list-group-item:last-child{
+    border-top-left-radius: 0px !important; 
+    border-top-right-radius:0px !important; 
+}
+
+.list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.list.file{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #eeeeee;
+    padding: 4px 6px;
+    min-height: 82px;
+}
+.list.file > li{
+    padding: 2px 6px;
+}
+.list.file > li:hover{
+    background: #f9f9f9;
+}
+.doc-response .bg-danger,
+.doc-response .bg-warning{
+    padding: 15px;
+}
+.award .form-control[readonly]{
+    background: #fff;
+    border-radius: 0;
+}
