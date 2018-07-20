@@ -20,34 +20,11 @@ import { DialogComponent } from './common/component/dialog.component';
 
 const appRoutes: Routes = [
   { 
-    path: '', 
-    component: HomeComponent,
-    children: [
-      {
-        path: '' , redirectTo: 'mjjd', pathMatch: 'full'
-      },{
-        path: 'mjjd', component: RecoComponent,
-      }
-      // ,{
-      //   path: 'mmht', component: RecoComponent,
-      // },
-      // ,{
-      //   path: 'jrtz', component: RecoComponent,
-      // }
-      // ,{
-      //   path: 'zscq', component: RecoComponent,
-      // }
-      // ,{
-      //   path: 'sszc', component: RecoComponent,
-      // },
-      // ,{
-      //   path: 'fdc', component: RecoComponent,
-      // }
-      // ,{
-      //   path: 'hswl', component: RecoComponent,
-      // }
-    ]
+    path: '', redirectTo: 'mjjd' , pathMatch: 'full'
   },
+  {
+    path: ':caseType', component: HomeComponent
+  }
 ];
 
 @NgModule({

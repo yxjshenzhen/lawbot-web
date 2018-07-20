@@ -40,14 +40,13 @@
         <div class="panel panel-info" >
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a href="#" (click)="$event.preventDefault();eleStates.ruleCollapse = !eleStates.ruleCollapse">引用规则</a></h4>
+              <a href="#" (click)="$event.preventDefault();eleStates.ruleCollapse = !eleStates.ruleCollapse">引用规则<span class="badge">{{rules.length}}</span></a></h4>
           </div>
           <div class="panel-body" [ngClass]="{'collapse': eleStates.ruleCollapse}">
             <table class="table table-hover table-bordered">
               <thead>
                 <tr>
                   <th style="width:5%">勾选</th>
-                  <th style="width:5%">序号</th>
                   <th style="width:45%">引用规则</th>
                   <th style="width:22%">引用法条</th>
                   <th style="width:23%">关键因子</th>
@@ -58,7 +57,6 @@
                   <td>
                     <input type="checkbox" name="rule_ck"/>
                   </td>
-                  <td>{{r.orderNo}}</td>
                   <td><div class="eclipse">{{r.ruleContent}}</div></td>
                   <td class="laws"><div *ngFor="let l of r.lawDetails" title="{{l.lawDetail}}">{{l.lawIndex}}</div></td>
                   <td><div class="pre">{{r.ruleKeys}}</div></td>

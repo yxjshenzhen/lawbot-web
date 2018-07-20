@@ -20,7 +20,9 @@ export class HeaderComponent implements OnInit {
     },{
       title: '法律Chatbot', chatbot: true
     },{
-      title: 'AI裁决书', url: '/#/adju'
+      title: 'AI裁决书', url: '/award/#/'
+    },{
+      title: 'AI合同', url: '/contract/'
     },{
       title: '关于我们', url: '/#/about'
     }]
