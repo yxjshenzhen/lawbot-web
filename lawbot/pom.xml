@@ -59,5 +59,6 @@
 		<module>lawbot-common</module>
 		<module>lawbot-case-award</module>
 		<module>lawbot-case-contract</module>
+		<module>lawbot-chatbot</module>
 	</modules>
 </project>
