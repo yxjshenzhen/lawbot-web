@@ -14,3 +14,17 @@
 .laws > div:not(:last-child){
     margin-bottom: 10px;
 }
+a.disabled{
+    color: #777;
+    text-decoration: none;
+    cursor: not-allowed;
+}
+.export-rule{
+    margin-bottom: 10px;
+}
+.same-case > ul{
+    margin-bottom: 20px;
+}
+span.strong{
+    font-weight: 600;
+}

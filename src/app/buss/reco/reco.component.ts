@@ -36,6 +36,7 @@ export class RecoComponent implements OnInit {
   factors: Array<string> = [];
 
   rules: Array<Object> = [];
+  exportRules: Array<Object> = [];
 
   sameCases: any = {
     cases_leve1: [],
@@ -193,34 +194,20 @@ export class RecoComponent implements OnInit {
    */
   showCaseLaws(c: any, tpl){
     this.modalData.caseObj = c;
-    this.recoService.getCaseDetail(c.case_id).subscribe((res: any) => {
+    this.recoService.getCaseLaws(c.caseId).subscribe((res: any) => {
       if(res.code == 200){
-        this.modalData.caselaws = res.data.caseDetail.case_laws;
+        this.modalData.caselaws = res.data.caseLaws;
         this.openModal(tpl);
       }
-    }); 
+    })
   }
 
   showCaseRules(c: any , tpl){
     this.modalData.caseObj = c;
-    this.recoService.getCaseDetail(c.case_id).subscribe((res: any) => {
-      if(res.code == 200){
-        this.modalData.caseRules = res.data.caseDetail.case_rules.map(rule => {
-          if(rule.law){
-            let laws = rule.law.split('\r\n');
-            rule.law = laws.map(law => {
-              return {
-                title: law.substr(0 , law.indexOf(":")),
-                content: law
-              }
-            });
-          }
-          
-          return rule;
-        });
-        this.openModal(tpl);
-      }
-    });
+    this.recoService.getCaseRules(c.caseKeys).subscribe((res: any) => {
+      this.modalData.caseRules = res.data.caseRules;
+      this.openModal(tpl);
+    })
   }
 
   /**
@@ -230,6 +217,17 @@ export class RecoComponent implements OnInit {
     this.lawModal.law = law;
     this.lawModal.title = title;
     this.openModal(tpl);
+  }
+
+  showRuleExportWin(tpl){
+    this.exportRules = this.rules.filter((r: any) => {
+      return r.checked;
+    });
+    this.openModal(tpl);
+  }
+
+  copyRules(){
+
   }
 
 }

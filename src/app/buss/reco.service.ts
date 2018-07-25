@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { map } from 'rxjs/operators';
 
 import { BaseService } from "../common/service/base.service";
+import { of } from 'rxjs/observable/of';
 @Injectable()
 export class RecoService extends BaseService{
 
@@ -42,10 +44,26 @@ export class RecoService extends BaseService{
     })
   }
 
-  getCaseDetail(caseId: string){
-    return this.get("api/case-detail/" + caseId);
-  }
 
+  /**
+   * 获取案件引用法条
+   * @param caseId 
+   */
+  caseLawsCached = {};
+  getCaseLaws(caseId: string){
+    if(this.caseLawsCached[caseId]){
+      return of(this.caseLawsCached[caseId]);
+    }
+
+    return this.get("api/case-laws/" + caseId).pipe(
+      map((res: any) => {
+        if(res.code == 200){
+          this.caseLawsCached[caseId] = res;
+        }
+        return res;
+      })
+    );
+  }
 
   getLaws(params){  
     return this.get("api/law/list" , {

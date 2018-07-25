@@ -35,12 +35,14 @@
     <div class="row" *ngIf="caseLoading > 0">
       <app-loading></app-loading>
     </div>
-    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0"> <!--*ngIf="factors.length > 0 && caseLoading == 0"-->
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="panel panel-info" >
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a href="#" (click)="$event.preventDefault();eleStates.ruleCollapse = !eleStates.ruleCollapse">引用规则<span class="badge">{{rules.length}}</span></a></h4>
+              <a href="#" (click)="$event.preventDefault();eleStates.ruleCollapse = !eleStates.ruleCollapse">引用规则<span class="badge">{{rules.length}}</span></a>
+              <a href="#" class="pull-right" (click)="$event.preventDefault();" (click)="showRuleExportWin(caseRuleExportTpl)" >导出审理意见</a>
+            </h4>
           </div>
           <div class="panel-body" [ngClass]="{'collapse': eleStates.ruleCollapse}">
             <table class="table table-hover table-bordered">
@@ -55,7 +57,7 @@
               <tbody>
                 <tr *ngFor="let r of rules">
                   <td>
-                    <input type="checkbox" name="rule_ck"/>
+                    <input type="checkbox" name="rule_ck" [(ngModel)]="r.checked"/>
                   </td>
                   <td><div class="eclipse">{{r.ruleContent}}</div></td>
                   <td class="laws"><div *ngFor="let l of r.lawDetails" title="{{l.lawDetail}}">{{l.lawIndex}}</div></td>
@@ -105,7 +107,7 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+    <div class="row same-case" *ngIf="factors.length > 0 && caseLoading == 0">
       <ul class="nav nav-tabs">
         <li [ngClass]="{'active': caseTabIndex == 0}"><a href="#" (click)="caseTabClick($event,0)" ><h5>案例统计</h5></a></li>
         <li [ngClass]="{'active': caseTabIndex == 4}"><a href="#" (click)="caseTabClick($event,4)" ><h5>最高法院案例推送</h5></a></li>
@@ -155,15 +157,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let c of activeCase">
-              <td>{{c.order_no}}</td>
-              <td>{{c.case_name}}</td>
+            <tr *ngFor="let c of activeCase ; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{c.caseName}}</td>
               <td><button class="btn btn-primary" (click)="showCaseLaws(c , caseRefTpl)">引用法条</button></td>
               <td>
-                <div class="eclipse" *ngFor="let k of c.case_keys; let i = $index" [innerHTML]="k"></div>
+                <span *ngFor="let k of c.caseKeys; let j = index" [class.strong]="factors.indexOf(k) >= 0">{{j + 1}}、{{k}} &nbsp;&nbsp;</span>
               </td>
               <td><button class="btn btn-primary" (click)="showCaseRules(c , caseRulesTpl)">引用规则</button></td>
-              <td>{{c.case_date}}</td>
+              <td>{{c.caseDate}}</td>
               <td><button class="btn btn-danger" (click)="showCaseDetail(c , caseTabIndex , caseContentTpl);">案件明细</button></td>
             </tr>
           </tbody>
@@ -172,6 +174,26 @@
     </div>
   </div>
 </div>
+<ng-template #caseRuleExportTpl>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">导出审理意见</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let r of exportRules" class="export-rule">
+      <div *ngFor="let l of r.lawDetails">
+        依据{{l.lawIndex}}:{{l.lawDetail}}
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-primary" (click)="copyRules()">复制</button> -->
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">关闭</button>
+  </div>
+</ng-template>
 
 <ng-template #caseRefTpl>
   <div class="modal-header">
@@ -185,14 +207,13 @@
       <table class="table table-hover table-bordered">
           <thead>
             <tr>
-              <th width="50px">序号</th><th width="250px">法条名称</th><th>法条内容</th>
+              <th width="250px">法条名称</th><th>法条内容</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let r of modalData.caselaws">
-              <td>{{r.order_no}}</td>
-              <td>{{r.law_name}}</td>
-              <td>{{r.law_content}}</td>
+            <tr *ngFor="let l of modalData.caselaws">
+              <td>{{l.law_full_name}}{{l.index_name}}</td>
+              <td>{{l.law_detail}}</td>
             </tr>
           </tbody>
         </table>
@@ -207,7 +228,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <h4>{{modalData.caseObj.case_name}}</h4>
+      <h4>{{modalData.caseObj.caseName}}</h4>
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
@@ -215,11 +236,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let r of modalData.caseRules">
-            <td>{{r.order_no}}</td>
-            <td>{{r.rule_content}}</td>
-            <td><div class="" *ngFor="let l of r.law" title="{{l.content}}">{{l.title}}</div></td>
-            <td><div class="pre">{{r.keys}}</div></td>
+          <tr *ngFor="let r of modalData.caseRules; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{r.ruleContent}}</td>
+            <td><div class="" *ngFor="let d of r.lawDetails" title="{{d.lawDetail}}">{{d.lawIndex}}</div></td>
+            <td><div class="pre">{{r.ruleKeys}}</div></td>
           </tr>
         </tbody>
       </table>
@@ -234,9 +255,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <h4>{{modalData.caseObj.case_name}}</h4>
+    <h4>{{modalData.caseObj.caseName}}</h4>
     <div *ngIf="modalData.index == 4">
-      <pre>{{modalData.caseObj.case_content}}</pre>
+      <pre>{{modalData.caseObj.caseContent}}</pre>
     </div>
     <div *ngIf="modalData.index < 4" class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
@@ -245,7 +266,7 @@
               <h4 class="panel-title">原告诉称</h4>
             </div>
             <div class="panel-body">
-              {{modalData.caseObj.case_content}}
+              {{modalData.caseObj.caseContent}}
             </div>
           </div>
       </div>
@@ -263,8 +284,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{modalData.caseObj.court_hear}}</td>
-                      <td>{{modalData.caseObj.court_decision}}</td>
+                      <td>{{modalData.caseObj.courtHear}}</td>
+                      <td>{{modalData.caseObj.courtDecision}}</td>
                     </tr>
                   </tbody>
                 </table>
