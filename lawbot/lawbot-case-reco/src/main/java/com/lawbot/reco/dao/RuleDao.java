@@ -15,4 +15,9 @@ import org.apache.ibatis.annotations.Param;
 public interface RuleDao {
 
 	List<Map> findWithLawByKeys(@Param("caseKeys") List<String> keys);
+	
+	
+	List<Map> findCaseLawByCaseId(@Param("caseId") long caseId);
+	
+	List<Map> findSameCaseByKeys(@Param("caseKeys") List<String> keys , @Param("courtLevel") int courtLevel);
 }

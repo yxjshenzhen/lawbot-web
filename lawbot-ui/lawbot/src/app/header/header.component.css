@@ -21,6 +21,7 @@
 	font-family: monospace;
 	line-height: 35px;
 	font-weight: 600;
+	text-align: center;
 }
 
 .nav {
@@ -38,7 +39,7 @@
 	color: #fff;
 	display: inline-block;
 	line-height: 50px;
-	padding: 0px 15px;
+	padding: 10px 15px;
 }
 
 .nav_title a:hover {
