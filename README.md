@@ -7,7 +7,7 @@
 * lawbot-case-contract 提供合同接口
 * lawbot-chatbot chatbot的访问控制
 
-SETUP
+### 安装
 ```
 # package all service
 mvn clean package
@@ -19,7 +19,7 @@ mvn clean package
 * lawbot-case-award 裁决书操作页面
 * lawbot-case-contract 合同操作页面
 
-SETUP
+### 安装
 ```
 # install the dependencies
 npm install
