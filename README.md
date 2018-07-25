@@ -10,7 +10,7 @@
 SETUP
 ```
 # package all service
-* mvn clean package
+mvn clean package
 
 ```
 ## 前端
@@ -22,13 +22,13 @@ SETUP
 SETUP
 ```
 # install the dependencies
-* npm install
+npm install
 
 # run developer env
-* npm run start
+npm run start
 
 # build the production 
-* npm run build
+npm run build
 ```
 
 ## 部署
