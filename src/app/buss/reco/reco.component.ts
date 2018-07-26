@@ -45,85 +45,87 @@ export class RecoComponent implements OnInit {
     cases_leve4: []
   };
 
+  checkedCourt: Array<boolean> = [true,true,true,true];
+
   laws:any = {};
 
   activeCase:any = [];
 
-  geoOptions = {
-    title : {
-        text: '推荐案件地区分布',
-        subtext: '                      ——小法博'
-    },
-    tooltip : {
-        trigger: 'item'
-    },
-    dataRange: {
-        orient: 'horizontal',
-        min: 0,
-        max: 550,
-        text:['高','低'],           // 文本，默认为数值文本
-        splitNumber:0
-    },								   
-    series : [
-        {
-            name: '推荐案件地区分布',
-            type: 'map',
-            mapType: 'china',
-            mapLocation: {
-                x: 'left'
-            },
-            selectedMode : 'multiple',
-            itemStyle:{
-                normal:{label:{show:true}},
-                emphasis:{label:{show:true}}
-            },
-            //共31个省市
-            data:[
-              {name: "西藏", value: 5},{name: "青海", value: 1},{name: "宁夏", value: 44},{name: "海南", value: 1},{name: "甘肃", value: 36},{name: "贵州", value: 7},
-              {name: "新疆", value: 34},{name: "云南", value: 68},{name: "重庆", value: 42},{name: "吉林", value: 25},{name: "山西", value: 20},{name: "天津", value: 7},
-              {name: "江西", value: 96},{name: "广西", value: 9},{name: "陕西", value: 98},{name: "黑龙江", value: 44},{name: "内蒙古", value: 18},{name: "安徽", value: 189},
-              {name: "北京", value: 0},{name: "福建", value: 357},{name: "上海", value: 1},{name: "湖北", value: 91},{name: "湖南", value: 141},{name: "四川", value: 108},{name: "辽宁", value: 68},
-              {name: "河北", value: 112},{name: "河南", value: 200},{name: "浙江", value: 92},{name: "山东", value: 249},{name: "江苏", value: 195},{name: "广东", value: 23}
-            ]
-        }
-    ],								    
-    animation: false
-  };
-  pieOptions = {
-    title : {
-        text: '各级法院案件占比',
-        subtext: '                   ------小法博',
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['最高院','高级法院','中级法院','基层法院']
-    },
-    series : [
-        {
-            name: '访问来源',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data: [{name: "最高院", value: 0}, {name: "高级法院", value: 0}, {name: "中级法院", value: 2381},{name: "基层法院", value: 0}],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-        }
-    ]
-  }
+  geoOptions: any;
+  geoUpdateOptions:any;
+  geoData = [];
 
+  pieOptions: any; 
+  pieUpdateOptions: any;
+  pieLegendData: any;
+  pieData: any;
   ngOnInit() {
-    
+    this.geoOptions = {
+      title : {
+          text: '推荐案件地区分布',
+          subtext: '                      ——小法博'
+      },
+      tooltip : {
+          trigger: 'item'
+      },
+      dataRange: {
+          orient: 'horizontal',
+          min: 0,
+          max: 550,
+          text:['高','低'],           // 文本，默认为数值文本
+          splitNumber:0
+      },								   
+      series : [
+          {
+              name: '推荐案件地区分布',
+              type: 'map',
+              mapType: 'china',
+              mapLocation: {
+                  x: 'left'
+              },
+              selectedMode : 'multiple',
+              itemStyle:{
+                  normal:{label:{show:true}},
+                  emphasis:{label:{show:true}}
+              },
+              //共31个省市
+              data: this.geoData
+          }
+      ],								    
+      animation: false
+    };
+    this.pieOptions = {
+      title : {
+          text: '各级法院案件占比',
+          subtext: '                   ------小法博',
+          x:'center'
+      },
+      tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+      legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: this.pieLegendData
+      },
+      series : [
+          {
+              name: '访问来源',
+              type: 'pie',
+              radius : '55%',
+              center: ['50%', '60%'],
+              data: this.pieData,
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+          }
+      ]
+    };
   }
 
   openModal(template: TemplateRef<any>) {
@@ -146,6 +148,7 @@ export class RecoComponent implements OnInit {
       if(code == 200){
         this.factors = data.caseKeys;  
         if(this.factors.length > 0){
+          this.loadStats();
           this.loadLaws();
           this.loadCaseRules();
         }
@@ -172,6 +175,38 @@ export class RecoComponent implements OnInit {
       }
       this.caseLoading --;
     })
+  }
+  loadStats(){
+    let params = {
+      caseKeys: this.factors,
+      courtLevels: this.checkedCourt.map((c ,i) => c ? i + 1 : 0).filter(c => c > 0)
+    };
+    if(params.courtLevels.length <= 0) return;
+    this.recoService.getStats(params).subscribe((res: any) => {
+      if(res.code == 200){
+        //update geo chart
+        this.geoData = res.data.stats.cities;
+        this.geoUpdateOptions = {
+          series: [{
+            data: this.geoData
+          }]
+        }
+
+        //update pie chart
+        this.pieData = res.data.stats.levels;
+        this.pieLegendData = this.pieData.map( (l: any) => {
+          return l.name;
+        });
+        this.pieUpdateOptions = {
+          legend: {
+            data: this.pieLegendData
+          },
+          series: [{
+            data: this.pieData
+          }]
+        };
+      }
+    });
   }
   loadLaws(){
     this.recoService.getLaws({

@@ -71,4 +71,8 @@ export class RecoService extends BaseService{
     })
   }
 
+  getStats(params){
+    return this.post("api/case-stats", params);
+  }
+
 }

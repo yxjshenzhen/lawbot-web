@@ -121,25 +121,26 @@
             <span class="glyphicon glyphicon-bookmark"></span>
             <label>法院等级:</label>
             <label>
-              <input type="checkbox" name="courtLevel">最高法院
+              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[3]">最高法院
             </label>
             <label>
-              <input type="checkbox" name="courtLevel">高级法院
+              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[2]">高级法院
             </label>
             <label>
-              <input type="checkbox" name="courtLevel">中级法院
+              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[1]">中级法院
             </label>
             <label>
-              <input type="checkbox" name="courtLevel">基层法院
+              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[0]">基层法院
             </label>
+            <button class="btn btn-primary btn-sm" (click)="loadStats()">搜索</button>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div echarts [options]="geoOptions"></div>
+            <div echarts [options]="geoOptions" [merge]="geoUpdateOptions"></div>
           </div>
           <div class="col-md-6">
-            <div echarts [options]="pieOptions"></div>
+            <div echarts [options]="pieOptions" [merge]="pieUpdateOptions"></div>
           </div>
         </div>
       </div>
