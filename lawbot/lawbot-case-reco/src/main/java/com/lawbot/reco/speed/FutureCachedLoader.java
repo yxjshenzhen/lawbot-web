@@ -40,7 +40,10 @@ public class FutureCachedLoader<T> {
 		
 		FutureWrapper<T> fw = cached.get(key);
 		
-		if(fw == null || isTimeout(fw.updated)){
+		if(fw == null || (isTimeout(fw.updated) && fw.future.isDone())){
+			//clear cache
+			if(fw != null) cached.remove(fw);
+			
 			fw = new FutureWrapper<T>(execute.submit(new Callable<T>() {
 
 				@Override
