@@ -26,5 +26,8 @@ public interface RuleService {
 	JSONObject findSameCases(List<String> keys);
 	
 	JSONObject findSameCasesOnCached(List<String> keys) throws InterruptedException, ExecutionException;
+	
+	
+	JSONObject fetchStat(JSONObject params);
 
 }

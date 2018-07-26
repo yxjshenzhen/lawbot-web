@@ -48,7 +48,6 @@ public class FutureCachedLoader<T> {
 
 				@Override
 				public T call() throws Exception {
-					// TODO Auto-generated method stub
 					return task.run(key);
 				}
 			}) , new Date()) ;

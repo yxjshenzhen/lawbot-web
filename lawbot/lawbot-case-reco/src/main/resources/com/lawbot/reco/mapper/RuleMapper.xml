@@ -99,4 +99,11 @@
 		JOIN s_key_info t7 ON t6.key_id = t7.key_id
     </select>
     
+    <select id="findCaseCitiesStats" resultType="HashMap">
+    
+    </select>
+    <select id="findCaseCourtLevelStats" resultType="HashMap">
+    	
+    </select>
+    
 </mapper>

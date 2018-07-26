@@ -20,4 +20,8 @@ public interface RuleDao {
 	List<Map> findCaseLawByCaseId(@Param("caseId") long caseId);
 	
 	List<Map> findSameCaseByKeys(@Param("caseKeys") List<String> keys , @Param("courtLevel") int courtLevel);
+	
+	List<Map> findCaseCitiesStats(@Param("caseKeys") List<String> keys , @Param("courtLevels") List<Integer> courtLevels , float x);
+	
+	List<Map> findCaseCourtLevelStats(@Param("caseKeys") List<String> keys , @Param("courtLevels") List<Integer> courtLevels , float x);
 }

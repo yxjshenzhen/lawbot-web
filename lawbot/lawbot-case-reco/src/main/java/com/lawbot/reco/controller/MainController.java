@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lawbot.core.entity.result.Result;
-import com.lawbot.core.entity.result.Result.ResultData;
 import com.lawbot.core.entity.result.ResultCode;
 import com.lawbot.reco.service.RuleService;
 
@@ -66,7 +65,7 @@ public class MainController {
 	}
 	
 	@PostMapping("case-same")
-	public Object getSameCases(@RequestBody(required = true) Map<String,Object> params){
+	public Result getSameCases(@RequestBody(required = true) Map<String,Object> params){
 		if(params.containsKey("keys") && params.get("keys") instanceof List){
 			List<String> keys = (List<String>) params.get("keys");
 			JSONObject sameCases;
@@ -79,13 +78,14 @@ public class MainController {
 			}
 		}
 		return Result.error(ResultCode.REQUEST_PARAMS_ERROR);
-		
 	}
 	
-	/*@GetMapping("case-detail/{caseId}")
-	public Object getCaseDetail(@PathVariable(required = true) String caseId){
-		return Result.success(new Result.ResultData("caseDetail",aiService.getCaseDetail(caseId)));
-	}*/
-	
-	
+	@PostMapping("case-stats")
+	public Result fetchStat(@RequestBody(required = false) JSONObject params){
+		if(!params.containsKey("caseKeys") || !params.containsKey("courtLevels")){
+			return Result.error(ResultCode.REQUEST_PARAMS_ERROR);
+		}
+		return Result.success(new Result.ResultData("stats" , ruleService.fetchStat(params)));
+		
+	}
 }
