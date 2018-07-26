@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lawbot.reco.dao.LawDao">
+	<resultMap type="com.lawbot.reco.domain.Law" id="LawMap">
+		<id property="lawId"  column="law_id" />
+		<result property="lawFullName" column="law_full_name"/>
+		<result property="lawSimpName" column="law_simp_name"/>
+		<result property="lawType" column="law_type"/>
+		<collection property="lawDetails" ofType="com.lawbot.reco.domain.LawDetail" javaType="ArrayList">
+			<id property="detailId"  column="detail_id" />
+			<result property="lawIndex" column="law_index"/>
+			<result property="indexName" column="index_name"/>
+			<result property="lawDetail" column="law_detail"/>
+		</collection>
+	</resultMap>
+	
+    <select id="findByAreaAndType" resultMap="LawMap">
+        SELECT t3.law_area_id,t1.*,t2.law_index,t2.index_name,t2.law_detail FROM s_law_info t1 
+		LEFT JOIN s_law_detail t2 ON(t1.`law_id` = t2.law_id)
+		INNER JOIN s_law_area t3 ON(t1.`law_id` = t3.`law_id` AND area_name = #{lawArea} AND law_type = #{lawType})
+	    ORDER BY t3.law_area_id,t2.law_index
+    </select>
+    
+</mapper>

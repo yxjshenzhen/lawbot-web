@@ -1,0 +1,69 @@
+<div class="body">
+  <div class="left">
+    <div class="header">
+      <h4>AI合同</h4>
+    </div>
+    <div class="list-group">
+      <a routerLink="/mjjd" class="list-group-item" [class.active]="params.caseType=='mjjd'">
+        民间借贷
+      </a>
+      <a routerLink="/mmht" class="list-group-item" [class.active]="params.caseType=='mmht'">买卖合同</a>
+      <a routerLink="/jrtz" class="list-group-item" [class.active]="params.caseType=='jrtz'">金融、投资</a>
+      <a routerLink="/zscq" class="list-group-item" [class.active]="params.caseType=='zscq'">知识产权</a>
+      <a routerLink="/sszc" class="list-group-item" [class.active]="params.caseType=='sszc'">诉讼、仲裁</a>
+      <a routerLink="/fdc" class="list-group-item" [class.active]="params.caseType=='fdc'">房地产</a>
+      <a routerLink="/hswl" class="list-group-item" [class.active]="params.caseType=='hswl'">海事物流</a>
+    </div>
+  </div>
+  <div class="right">
+    <div class="container contract">
+      <div clas="row">
+        <div class="col-md-12">
+          <div class="row form-group">
+            <div class="col-md-10">
+              <input class="form-control" readonly [value]="params.contractFile ?  params.contractFile.name : ''" placeholder="请选择合同"/>
+              <input type="file" #docFile class="sr-only" (change)="onDocChange($event)">
+            </div>
+            <div class="col-md-2">
+              <button class="btn" (click)="docFile.click()">选择合同</button>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-2"><label>合同类型</label></div>
+            <div class="col-md-10">
+              <div class="btn-select">
+                <button class="btn" [class.btn-primary]="params.fundType == 0" (click)="params.fundType = 0">股票型</button>
+                <button class="btn" [class.btn-primary]="params.fundType == 1" (click)="params.fundType = 1">指数型</button>
+                <button class="btn" [class.btn-primary]="params.fundType == 2" (click)="params.fundType = 2">债券型</button>
+                <button class="btn" [class.btn-primary]="params.fundType == 3" (click)="params.fundType = 3">货币市场</button>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-2"><label>修改理由</label></div>
+            <div class="col-md-10">
+              <div class="btn-select">
+                <button class="btn" [class.btn-primary]="params.reasonColumn == 1" (click)="params.reasonColumn = 1">有</button>
+                <button class="btn" [class.btn-primary]="params.reasonColumn == 0" (click)="params.reasonColumn = 0">无</button>
+              </div>
+            </div>
+          </div>
+          <div class="row doc-response">
+            <div class="col-md-12">
+              <p class="bg-danger" *ngIf="error.length > 0">
+                <span>{{error}}</span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary" (click)="onCompare()" [disabled]="!params.contractFile">生成对照表</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

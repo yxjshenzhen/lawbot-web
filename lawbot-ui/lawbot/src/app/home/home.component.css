@@ -1,0 +1,5 @@
+.main{
+    background-image: url("/assets/images/home.png");
+    height: calc(100% - 412px);
+    padding-top: 10%;
+}

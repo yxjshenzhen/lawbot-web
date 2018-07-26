@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Lawbot</title>
+	<style type="text/css">
+		html,body{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #000;
+		}
+		.login-win{
+			width: 320px;
+			background: #fff;
+			padding: 30px;
+			position: fixed;
+			top: 20%;
+			left: 50%;
+			margin-left: -160px;
+		}
+		.form-control{
+			padding: 10px;
+			border-radius: 2px;
+			border: 1px solid;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		.row{
+			margin-bottom: 20px;
+		}
+		.row:after{
+			clear: both;
+		}
+		.col{
+			float: left;
+		}
+		.col-label{
+			width: 30%;
+			padding-top: 7px;
+		}
+		.col-control{
+			width: 70%;
+		}
+		.error{
+			color: red;
+		}
+		.login-title{
+			border-bottom: 1px solid;
+			margin-bottom: 30px;
+		}
+		
+		.btn{
+			width: 100%;
+			padding: 10px;
+			background-color: #00b1e4;
+			border: 1px solid #000;
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+			border-radius: 2px;
+		}
+		.clear{
+			clear: both;
+		}
+		.required{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="login-win">
+		<div class="login-title">
+			<h3>Login to Lawbot</h3>
+		</div>
+		
+		<form th:action="'login?callback=' + ${param.callback[0]}" method="post" >
+			<div class="row">
+				<label class="col col-label"><span class="required">*</span>User Name</label>
+				<div class="col col-control">
+					<input type="text" name="username" class="form-control" placeholder="User Name"/>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="row">
+				<label class="col col-label"><span class="required">*</span>Password</label>
+				<div class="col col-control"><input type="password" name="password" class="form-control"/></div>
+				<div class="clear"></div>
+			</div>
+			<div class="row">
+				<input type="submit" class="btn" value="LOGIN"/>
+			</div>
+			<div class="error" th:text="${message}"></div>
+			<div class="clear"></div>
+		</form>
+	</div>
+</body>
+	
+</html>

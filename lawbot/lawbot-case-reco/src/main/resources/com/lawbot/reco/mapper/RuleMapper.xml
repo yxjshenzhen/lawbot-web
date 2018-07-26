@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2015-2016 the original author or authors.
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lawbot.reco.dao.RuleDao">
+	<resultMap type="HashMap" id="RuleMap">
+		<id property="ruleId" column="rule_id" />
+		<result property="ruleContent" column="rule_content"/>
+		<result property="ruleKeys" column="rule_keys"/>
+		<collection property="lawDetails" ofType="HashMap" javaType="ArrayList">
+			<result property="lawIndex" column="law_index"/>
+			<result property="lawDetail" column="law_detail"/>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="HashMap" id="SameCaseMap">
+		<id property="caseId" column="case_id"></id>
+		<result property="caseDate" column="case_date"/>
+		<result property="caseName" column="case_name"/>
+		<result property="caseContent" column="case_content"/>
+		<result property="courtHear" column="court_hear"/>
+		<result property="courtDecision" column="court_decision"/>
+		<collection property="caseKeys" ofType="String" javaType="ArrayList">
+			<result property="key" column="key_content"/>
+		</collection>
+	</resultMap>
+	
+    <select id="findWithLawByKeys" resultMap="RuleMap">
+        SELECT
+			t3.*
+		FROM
+			s_key_info t1
+			JOIN t_rule_key t2 ON t1.key_id = t2.key_id
+			JOIN v_rule_detail t3 ON t2.rule_id = t3.rule_id 
+		WHERE
+			t1.key_content IN <foreach collection="caseKeys" item="key" open="(" close=")" separator=",">#{key}</foreach>
+    </select>
+    
+    <select id="findCaseLawByCaseId" resultType="HashMap">
+    	SELECT t3.law_full_name,t2.index_name,t2.law_detail,t2.law_index FROM t_case_law t1 
+			LEFT JOIN s_law_detail t2 ON t1.`detail_id` = t2.`detail_id`
+			LEFT JOIN s_law_info t3 ON t2.`law_id` = t3.`law_id`
+		WHERE t1.case_id = #{caseId} ORDER BY t3.law_full_name,t2.law_index;
+    </select>
+    <select id="findSameCaseByKeys" resultMap="SameCaseMap">		
+		SELECT
+			t5.case_id,
+			t5.case_date,
+			t5.case_name,
+			t5.case_content,
+			t5.court_hear,
+			t5.court_decision,
+			t7.key_content 
+		FROM
+		(
+		SELECT
+			t3.case_id 
+		FROM
+			(
+			SELECT
+				t1.case_id,
+				COUNT( * ) / t1.case_key_count AS passrate,
+				COUNT( * ) AS match_count 
+			FROM
+				t_case_key t1
+				JOIN (
+				SELECT
+					key_id 
+				FROM
+					s_key_info 
+				WHERE
+					key_content IN <foreach collection="caseKeys" item="key" open="(" close=")" separator=",">#{key}</foreach>  
+				) t2 ON t1.key_id = t2.key_id 
+			WHERE
+				t1.court_level = #{courtLevel} 
+			GROUP BY
+				t1.case_id,
+				t1.case_key_count 
+			) t3 
+		ORDER BY
+			t3.match_count DESC,
+			t3.passrate DESC 
+			LIMIT 5 
+		) t4
+		JOIN s_case_info t5 ON t4.case_id = t5.case_id
+		JOIN t_case_key t6 ON t4.case_id = t6.case_id
+		JOIN s_key_info t7 ON t6.key_id = t7.key_id
+    </select>
+    
+    <select id="findCaseCitiesStats" resultType="HashMap">
+    
+    </select>
+    <select id="findCaseCourtLevelStats" resultType="HashMap">
+    	
+    </select>
+    
+</mapper>

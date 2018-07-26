@@ -1,0 +1,16 @@
+{
+    "/award/api": {
+      "target": "http://localhost:5202",
+      "secure": false,
+      "pathRewrite": {
+        "^/award/api": ""
+      }
+    },
+    "/account": {
+      "target": "http://localhost:5201",
+      "secure": false,
+      "pathRewrite": {
+        "^/account": "/user"
+      }
+    }
+}
