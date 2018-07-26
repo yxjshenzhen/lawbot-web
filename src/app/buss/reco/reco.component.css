@@ -28,3 +28,21 @@ a.disabled{
 span.strong{
     font-weight: 600;
 }
+span.skip{
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.chatbot{
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    cursor: pointer;
+}
+.chatbot > img{
+    opacity: 0.5;
+    width: 160px;
+}
+.chatbot:hover > img {
+    opacity: 1;
+}

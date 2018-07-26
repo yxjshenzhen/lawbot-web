@@ -162,7 +162,9 @@
               <td>{{c.caseName}}</td>
               <td><button class="btn btn-primary" (click)="showCaseLaws(c , caseRefTpl)">引用法条</button></td>
               <td>
-                <span *ngFor="let k of c.caseKeys; let j = index" [class.strong]="factors.indexOf(k) >= 0">{{j + 1}}、{{k}} &nbsp;&nbsp;</span>
+                <span *ngFor="let k of c.caseKeys; let j = index" class="factor">
+                  <span>{{j + 1}}、</span><span [class.strong]="factors.indexOf(k) >= 0" [class.skip]="factors.indexOf(k) < 0">{{k}}</span>&nbsp;&nbsp;
+                </span>
               </td>
               <td><button class="btn btn-primary" (click)="showCaseRules(c , caseRulesTpl)">引用规则</button></td>
               <td>{{c.caseDate}}</td>
@@ -173,6 +175,9 @@
       </div> 
     </div>
   </div>
+</div>
+<div class="chatbot" (click)="openLawbot()">
+  <img src="assets/images/law.jpg" /> 
 </div>
 <ng-template #caseRuleExportTpl>
   <div class="modal-header">
