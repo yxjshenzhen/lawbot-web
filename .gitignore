@@ -8,6 +8,7 @@
 
 # dependencies
 /node_modules
+/target
 
 # IDEs and editors
 /.idea
@@ -41,3 +42,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/lawbot/target
+/lawbot/lawbot-case-reco/target
+/lawbot/lawbot-common/target
+/lawbot/lawbot-sys/target
