@@ -1,0 +1,47 @@
+.main{
+    padding-top: 20px;
+    height: 100%;
+    overflow: auto;
+}
+.case-row .panel-body{
+    height: 284px;
+    overflow: auto;
+}
+.case-content{
+    min-height: 200px;
+    width: 100%;
+}
+.laws > div:not(:last-child){
+    margin-bottom: 10px;
+}
+a.disabled{
+    color: #777;
+    text-decoration: none;
+    cursor: not-allowed;
+}
+.export-rule{
+    margin-bottom: 10px;
+}
+.same-case > ul{
+    margin-bottom: 20px;
+}
+span.strong{
+    font-weight: 600;
+}
+span.skip{
+    color: #aaa;
+}
+
+.chatbot{
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    cursor: pointer;
+}
+.chatbot > img{
+    opacity: 0.5;
+    width: 160px;
+}
+.chatbot:hover > img {
+    opacity: 1;
+}

@@ -1,0 +1,21 @@
+<div class="body">
+  <div class="left">
+    <div class="header">
+      <h4>AI案件分析</h4>
+    </div>
+    <div class="list-group">
+      <a routerLink="/mjjd" class="list-group-item" [class.active]="caseType=='mjjd'">
+        民间借贷
+      </a>
+      <a routerLink="/mmht" class="list-group-item" [class.active]="caseType=='mmht'">买卖合同</a>
+      <a routerLink="/jrtz" class="list-group-item" [class.active]="caseType=='jrtz'">金融、投资</a>
+      <a routerLink="/zscq" class="list-group-item" [class.active]="caseType=='zscq'">知识产权</a>
+      <a routerLink="/sszc" class="list-group-item" [class.active]="caseType=='sszc'">诉讼、仲裁</a>
+      <a routerLink="/fdc" class="list-group-item" [class.active]="caseType=='fdc'">房地产</a>
+      <a routerLink="/hswl" class="list-group-item" [class.active]="caseType=='hswl'">海事物流</a>
+    </div>
+  </div>
+  <div class="right">
+    <app-reco></app-reco>
+  </div>
+</div>
