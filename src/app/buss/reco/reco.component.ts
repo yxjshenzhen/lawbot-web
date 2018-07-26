@@ -202,7 +202,7 @@ export class RecoComponent implements OnInit {
             data: this.pieLegendData
           },
           series: [{
-            data: this.pieData
+            data: this.pieData 
           }]
         };
       }
