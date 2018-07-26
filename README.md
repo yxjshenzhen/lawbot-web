@@ -1,27 +1,42 @@
-# LawbotCaseReco
+# lawbot-web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+## 服务端
+* lawbot-sys 提供用户相关接口，使用spring session实现单点登录
+* lawbot-case-reco 提供同案推荐接口
+* lawbot-case-award 提供裁决书接口
+* lawbot-case-contract 提供合同接口
+* lawbot-chatbot chatbot的访问控制
 
-## Development server
+### 安装
+```
+# package all service
+mvn clean package
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+## 前端
+* lawbot Portal页面
+* lawbot-case-reco 同案推荐操作页面
+* lawbot-case-award 裁决书操作页面
+* lawbot-case-contract 合同操作页面
 
-## Code scaffolding
+### 安装
+```
+# install the dependencies
+npm install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# run developer env
+npm run start
 
-## Build
+# build the production 
+npm run build
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## 部署
+使用nginx反向代理
+```
+/account/ proxy to lawbot-sys
+/reco/api/ proxy to lawbot-case-reco
+/award/api proxy to lawbot-case-award
+/contract/api proxy to lawbot-case-contract
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
