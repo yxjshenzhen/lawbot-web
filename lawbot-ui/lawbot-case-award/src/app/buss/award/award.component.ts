@@ -20,8 +20,6 @@ export class AwardComponent implements OnInit {
     
   }
 
-  
-
   params: any = {
     caseType: null,
     routineFile: null,//程序部分

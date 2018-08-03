@@ -3,3 +3,10 @@
     height: calc(100% - 412px);
     padding-top: 10%;
 }
+.keyword-input{
+    width: 100%;
+}
+.form-control{
+    height: 4rem;
+    font-size: 1.88rem;
+}

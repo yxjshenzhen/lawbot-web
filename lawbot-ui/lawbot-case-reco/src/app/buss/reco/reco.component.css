@@ -3,9 +3,10 @@
     height: 100%;
     overflow: auto;
 }
-.case-row .panel-body{
+.case-row .card-body{
     height: 284px;
     overflow: auto;
+    padding: 15px;
 }
 .case-content{
     min-height: 200px;
@@ -22,6 +23,10 @@ a.disabled{
 .export-rule{
     margin-bottom: 10px;
 }
+.same-case{
+    margin-top: 20px;
+    padding: 0 15px;
+}
 .same-case > ul{
     margin-bottom: 20px;
 }
@@ -34,14 +39,62 @@ span.skip{
 
 .chatbot{
     position: fixed;
-    bottom: 20px;
-    right: 0;
+    left: -15px;
+    top: 85px;
     cursor: pointer;
 }
 .chatbot > img{
     opacity: 0.5;
     width: 160px;
 }
+.navbar-nav > li > a{
+    color: #fff;
+}
 .chatbot:hover > img {
     opacity: 1;
 }
+.card{
+    margin-top: 20px;
+    border-color: #bce8f1;
+}
+.card > .card-header{
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.card-title{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+.card-body > form > .form-group{
+    margin-bottom: 10px;
+}
+
+.e-hidden{
+    display: none
+}
+.pill{
+    margin: 0 5px;
+    color: #d9edf7;
+    background-color: #31708f;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
+
+}
+pre { 
+    white-space: pre-wrap; /*css-3*/ 
+    white-space: -moz-pre-wrap; /*Mozilla,since1999*/ 
+    white-space: -pre-wrap; /*Opera4-6*/ 
+    white-space: -o-pre-wrap; /*Opera7*/ 
+    word-wrap: break-word; /*InternetExplorer5.5+*/ 
+} 

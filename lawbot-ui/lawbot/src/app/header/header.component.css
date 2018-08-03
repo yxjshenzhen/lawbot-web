@@ -1,14 +1,18 @@
 .account:hover > .dropdown-menu{
     display: block !important;
 }
-
+li:hover .dropdown-menu {
+	display: block;
+}
 #head {
 	background-color: #708090;
 	height: 70px;
 }
 
 .head_box {
-	margin: 0 auto;
+	position: absolute;
+	float: left;
+	margin: 0;
 	max-width: 1096px;
 	height: 70px;
 }
@@ -23,10 +27,15 @@
 	font-weight: 600;
 	text-align: center;
 }
-
+nav{
+	margin: 0;
+	border-radius: 0;
+	padding: 0 7%;
+}
 .nav {
-    float:right;
+  float: right;
 	display: inline-block;	
+	font-size: 14px;
 }
 
 .nav_title {
@@ -84,4 +93,16 @@ border-bottom-left-radius: 4px;
 }
 #experience {
 	position: relative;
+}
+.dropdown-menu{
+	background-color: slategrey;
+  padding: 0px;
+}
+.dropdown-menu > ul{
+	padding: 0px;
+}
+.navbar > .right{
+	position: absolute;
+	float: right;
+	right: 7%;
 }

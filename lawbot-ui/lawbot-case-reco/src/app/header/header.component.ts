@@ -16,7 +16,16 @@ export class HeaderComponent implements OnInit {
     },{
       title: '产品', url: '/#/product'
     },{
-      title: 'AI案件分析', url: '/reco/#/' ,active: true
+      title: 'AI案件分析', url: '/reco/#/' ,active: true,
+      subMenus: [
+        {title: '民间借贷', url: '/reco/#/mjjd'},
+        {title: '买卖合同', url: '/reco/#/mmht',},
+        {title: '金融、投资', url: '/reco/#/jrtz'},
+        {title: '知识产权', url: '/reco/#/zscq'},
+        {title: '诉讼、仲裁', url: '/reco/#/sszc'},
+        {title: '房地产', url: '/reco/#/fdc'},
+        {title: '海事物流', url: '/reco/#/hswl'}
+      ]
     },{
       title: '法律Chatbot', chatbot: true
     },{

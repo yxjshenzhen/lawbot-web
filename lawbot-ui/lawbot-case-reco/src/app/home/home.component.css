@@ -1,5 +1,4 @@
 .body{
-    height: 100%;
     width: 100%;
     box-sizing: border-box;
     padding-top: 51px;
@@ -10,7 +9,6 @@
     float: left;
     background: #3d3d3d!important;
     border-right: 1px solid #dddddd;
-    
 }
 
 .body > .right{
@@ -34,9 +32,7 @@
     color: #fff;
     background: #222222;
 }
-.left > .list-group{
-    
-}
+
 .list-group-item{
     border-right-width: 0;
     border-left-width: 0;
@@ -47,7 +43,6 @@
 .list-group-item.active{
     background: #303033 !important;
 }
-
 
 .list-group-item:first-child,
 .list-group-item:last-child{
