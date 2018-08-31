@@ -41,6 +41,7 @@ public abstract class DocGenerator implements OutputGenerator {
     public static final String FONT_FAMILY_FANGSONG = "仿宋_GB2312";
     public static final String FONT_FAMILY_HEITI = "黑体";
     public static final String FONT_FAMILY_KAITI = "楷体";
+    public static final String FONT_FAMILY_DENGXIAN = "等线";
 
     private List<String> errorToUser;
     private List<String> warningToUser;
