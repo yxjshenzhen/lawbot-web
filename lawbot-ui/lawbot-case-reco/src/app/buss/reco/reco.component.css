@@ -58,11 +58,13 @@ span.skip{
     border-color: #bce8f1;
 }
 .card > .card-header{
+    z-index: 1;
     color: #31708f;
     background-color: #d9edf7;
     border-color: #bce8f1;
 }
 .card-title{
+    z-index: 0;
     margin-top: 0;
     margin-bottom: 0;
     font-size: 16px;
@@ -98,3 +100,14 @@ pre {
     white-space: -o-pre-wrap; /*Opera7*/ 
     word-wrap: break-word; /*InternetExplorer5.5+*/ 
 } 
+
+.grid-loading{
+    height: 60px;
+    position: relative;
+    padding: 15px;
+}
+
+.container{
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+}

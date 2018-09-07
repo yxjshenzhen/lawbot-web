@@ -32,6 +32,10 @@ export class RecoComponent implements OnInit {
   caseKeysLoading: boolean = false;
   caseLoading = 0;
   caseTabIndex = 0;
+  rulesLoading = false;
+  sameCasesLoading = false;
+  lawsLoading = false;
+  statusLoading = false;
 
   factors: Array<string> = [];
 
@@ -135,7 +139,9 @@ export class RecoComponent implements OnInit {
   }
 
   caseTabClick(e , i){
-    e.preventDefault(); 
+    if(e != null){
+      e.preventDefault(); 
+    }
     this.caseTabIndex = i;
     if(i > 0)
       this.activeCase = this.sameCases['cases_leve' + i];
@@ -148,9 +154,10 @@ export class RecoComponent implements OnInit {
       if(code == 200){
         this.factors = data.caseKeys;  
         if(this.factors.length > 0){
-          this.loadStats();
-          this.loadLaws();
+          this.caseLoading = 3;
           this.loadCaseRules();
+          this.loadLaws();
+          this.loadStats();
         }
       }
       this.showFactors = true;
@@ -159,20 +166,39 @@ export class RecoComponent implements OnInit {
   }
 
   loadCaseRules(){
-    this.caseLoading = 2;
+    // this.caseLoading = 2;
+    this.rulesLoading = true;
+    
     if(this.factors.length == 0) return;
     this.recoService.getCaseRules(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
         this.rules = data.caseRules;
       }
+      this.rulesLoading = false;
       this.caseLoading --;
     });
+    this.sameCasesLoading = true;
     this.recoService.getSameCases(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
         this.sameCases = data.sameCases;
       }
+      this.sameCasesLoading = false;
+      
+      this.caseLoading --;
+      this.caseTabClick(null, 0);
+    })
+  }
+  loadLaws(){
+    this.lawsLoading = true;
+    this.recoService.getLaws({
+      lawArea: '民间借贷'
+    }).subscribe((res: any )=> {
+      if(res.code == 200){
+        this.laws = res.data.laws;
+      }
+      this.lawsLoading = false;
       this.caseLoading --;
     })
   }
@@ -208,16 +234,7 @@ export class RecoComponent implements OnInit {
       }
     });
   }
-  loadLaws(){
-    this.recoService.getLaws({
-      lawArea: '民间借贷'
-    }).subscribe((res: any )=> {
-      if(res.code == 200){
-        this.laws = res.data.laws;
-      }
-    })
-  }
-
+  
   showCaseDetail(c: any , i , tpl){
     this.modalData.caseObj = c;
     this.modalData.index= i;

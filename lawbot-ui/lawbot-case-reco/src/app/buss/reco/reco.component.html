@@ -32,11 +32,9 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="caseLoading > 0">
-      <app-loading></app-loading>
-    </div>
-    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0"> 
-    <!-- <div class="row"> -->
+    
+    <div class="row" *ngIf="factors.length > 0 && !rulesLoading"> 
+      <!-- <div class="row"> -->
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card " >
           <div class="card-header">
@@ -60,7 +58,8 @@
                   <td>
                     <input type="checkbox" name="rule_ck" [(ngModel)]="r.checked"/>
                   </td>
-                  <td><div class="eclipse">{{r.ruleContent}}</div></td>
+                  <!-- class="eclipse" -->
+                  <td><div >{{r.ruleContent}}</div></td>
                   <td class="laws"><div *ngFor="let l of r.lawDetails" title="{{l.lawDetail}}">{{l.lawIndex}}</div></td>
                   <td><div class="pre">{{r.ruleKeys}}</div></td>
                 </tr>
@@ -70,7 +69,12 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="factors.length > 0 && caseLoading == 0">
+
+    <div class="row" *ngIf="factors.length > 0 && !lawsLoading">
+      <!-- <div class="row grid-loading">
+          <app-loading *ngIf="!rulesLoading && lawsLoading"></app-loading>
+      </div> -->
+
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card " >
           <div class="card-header">
@@ -108,75 +112,85 @@
         </div>
       </div>
     </div>
-    <div class="row same-case" *ngIf="factors.length > 0 && caseLoading == 0">
-    <!-- <div class="row same-case">  -->
-      <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 0}" (click)="caseTabClick($event,0)" ><h5>案例统计</h5></a></li>
-        <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 4}" (click)="caseTabClick($event,4)" ><h5>最高法院案例推送</h5></a></li>
-        <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 3}" (click)="caseTabClick($event,3)" ><h5>高级法院案例推送</h5></a></li>
-        <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 2}" (click)="caseTabClick($event,2)"><h5>中级法院案例推送</h5></a></li>
-        <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 1}" (click)="caseTabClick($event,1)"><h5>基层法院案例推送</h5></a></li>
-      </ul>
-      <div *ngIf="caseTabIndex == 0" class="row col-md-12">
-        <div class="row col-md-12">
-          <div class="col-md-12">
-            <span class="glyphicon glyphicon-bookmark"></span>
-            <label>法院等级:</label>
-            <label>
-              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[3]">最高法院
-            </label>
-            <label>
-              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[2]">高级法院
-            </label>
-            <label>
-              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[1]">中级法院
-            </label>
-            <label>
-              <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[0]">基层法院
-            </label>
-            <button class="btn btn-primary btn-sm" (click)="loadStats()">搜索</button>
+
+    <div class="row same-case" *ngIf="factors.length > 0 && !sameCasesLoading">
+      <!-- <div class="row grid-loading" *ngIf="sameCasesLoading">
+          <app-loading></app-loading>
+      </div> -->
+      <div >
+        <!-- <div class="row same-case">  -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 0}" (click)="caseTabClick($event,0)" ><h5>案例统计</h5></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 4}" (click)="caseTabClick($event,4)" ><h5>最高法院案例推送</h5></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 3}" (click)="caseTabClick($event,3)" ><h5>高级法院案例推送</h5></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 2}" (click)="caseTabClick($event,2)" ><h5>中级法院案例推送</h5></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" [ngClass]="{'active': caseTabIndex == 1}" (click)="caseTabClick($event,1)" ><h5>基层法院案例推送</h5></a></li>
+        </ul>
+        <div *ngIf="caseTabIndex == 0" class="row col-md-12">
+          <div class="row col-md-12">
+            <div class="col-md-12">
+              <span class="glyphicon glyphicon-bookmark"></span>
+              <label>法院等级:</label>
+              <label>
+                <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[3]">最高法院
+              </label>
+              <label>
+                <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[2]">高级法院
+              </label>
+              <label>
+                <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[1]">中级法院
+              </label>
+              <label>
+                <input type="checkbox" name="courtLevel" [(ngModel)]="checkedCourt[0]">基层法院
+              </label>
+              <button class="btn btn-primary btn-sm" (click)="loadStats()">搜索</button>
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <div class="col-md-6">
+              <div echarts [options]="geoOptions" [merge]="geoUpdateOptions"></div>
+            </div>
+            <div class="col-md-6">
+              <div echarts [options]="pieOptions" [merge]="pieUpdateOptions"></div>
+            </div>
           </div>
         </div>
-        <div class="row col-md-12">
-          <div class="col-md-6">
-            <div echarts [options]="geoOptions" [merge]="geoUpdateOptions"></div>
-          </div>
-          <div class="col-md-6">
-            <div echarts [options]="pieOptions" [merge]="pieUpdateOptions"></div>
-          </div>
-        </div>
+        <div *ngIf="caseTabIndex > 0">
+        <!-- <div> -->
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th style="width:5%">排名</th>
+                <th style="width:25%">案名</th>
+                <th style="width:10%">法条</th>
+                <th style="width:30%">关键因子</th>
+                <th style="width:10%">引用规则</th>
+                <th style="width:10%">审理日期</th>
+                <th style="width:10%">操作</th>								
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of activeCase ; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{c.caseName}}</td>
+                <td><button class="btn btn-primary" (click)="showCaseLaws(c , caseRefTpl)">引用法条</button></td>
+                <td>
+                  <span *ngFor="let k of c.caseKeys; let j = index" class="factor">
+                    <span>{{j + 1}}、</span><span [class.strong]="factors.indexOf(k) >= 0" [class.skip]="factors.indexOf(k) < 0">{{k}}</span>&nbsp;&nbsp;
+                  </span>
+                </td>
+                <td><button class="btn btn-primary" (click)="showCaseRules(c , caseRulesTpl)">引用规则</button></td>
+                <td>{{c.caseDate}}</td>
+                <td><button class="btn btn-danger" (click)="showCaseDetail(c , caseTabIndex , caseContentTpl);">案件明细</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div> 
       </div>
-      <div *ngIf="caseTabIndex > 0">
-      <!-- <div> -->
-        <table class="table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th style="width:5%">排名</th>
-              <th style="width:25%">案名</th>
-              <th style="width:10%">法条</th>
-              <th style="width:30%">关键因子</th>
-              <th style="width:10%">引用规则</th>
-              <th style="width:10%">审理日期</th>
-              <th style="width:10%">操作</th>								
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let c of activeCase ; let i = index">
-              <td>{{i + 1}}</td>
-              <td>{{c.caseName}}</td>
-              <td><button class="btn btn-primary" (click)="showCaseLaws(c , caseRefTpl)">引用法条</button></td>
-              <td>
-                <span *ngFor="let k of c.caseKeys; let j = index" class="factor">
-                  <span>{{j + 1}}、</span><span [class.strong]="factors.indexOf(k) >= 0" [class.skip]="factors.indexOf(k) < 0">{{k}}</span>&nbsp;&nbsp;
-                </span>
-              </td>
-              <td><button class="btn btn-primary" (click)="showCaseRules(c , caseRulesTpl)">引用规则</button></td>
-              <td>{{c.caseDate}}</td>
-              <td><button class="btn btn-danger" (click)="showCaseDetail(c , caseTabIndex , caseContentTpl);">案件明细</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div> 
+    </div>
+    <!-- <div class="row" > -->
+    <div class="row grid-loading" *ngIf="caseLoading > 0">
+        <app-loading></app-loading>
     </div>
   </div>
 </div>
