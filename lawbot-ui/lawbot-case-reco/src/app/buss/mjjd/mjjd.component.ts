@@ -2,16 +2,16 @@ import { Component, OnInit,TemplateRef  } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-import { RecoService } from "../reco.service";
+import { MjjdService } from "./mjjd.service";
 
 @Component({
   selector: 'app-reco',
-  templateUrl: './reco.component.html',
-  styleUrls: ['./reco.component.css']
+  templateUrl: './mjjd.component.html',
+  styleUrls: ['./mjjd.component.css']
 })
-export class RecoComponent implements OnInit {
+export class MjjdComponent implements OnInit {
 
-  constructor(private recoService: RecoService,private modalService: BsModalService) { }
+  constructor(private MjjdService: MjjdService,private modalService: BsModalService) { }
 
   modalRef: BsModalRef;
 
@@ -149,7 +149,7 @@ export class RecoComponent implements OnInit {
   analyze(){
     this.caseKeysLoading = true;
     this.factors = [];
-    this.recoService.calcFactors(this.caseText).subscribe((res: any) => {
+    this.MjjdService.calcFactors(this.caseText).subscribe((res: any) => {
       let data = res.data, code = res.code;
       if(code == 200){
         this.factors = data.caseKeys;  
@@ -170,7 +170,7 @@ export class RecoComponent implements OnInit {
     this.rulesLoading = true;
     
     if(this.factors.length == 0) return;
-    this.recoService.getCaseRules(this.factors).subscribe((res: any) => {
+    this.MjjdService.getCaseRules(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
         this.rules = data.caseRules;
@@ -179,7 +179,7 @@ export class RecoComponent implements OnInit {
       this.caseLoading --;
     });
     this.sameCasesLoading = true;
-    this.recoService.getSameCases(this.factors).subscribe((res: any) => {
+    this.MjjdService.getSameCases(this.factors).subscribe((res: any) => {
       let data = res.data , code = res.code;
       if(code == 200){
         this.sameCases = data.sameCases;
@@ -192,7 +192,7 @@ export class RecoComponent implements OnInit {
   }
   loadLaws(){
     this.lawsLoading = true;
-    this.recoService.getLaws({
+    this.MjjdService.getLaws({
       lawArea: '民间借贷'
     }).subscribe((res: any )=> {
       if(res.code == 200){
@@ -208,7 +208,7 @@ export class RecoComponent implements OnInit {
       courtLevels: this.checkedCourt.map((c ,i) => c ? i + 1 : 0).filter(c => c > 0)
     };
     if(params.courtLevels.length <= 0) return;
-    this.recoService.getStats(params).subscribe((res: any) => {
+    this.MjjdService.getStats(params).subscribe((res: any) => {
       if(res.code == 200){
         //update geo chart
         this.geoData = res.data.stats.cities;
@@ -248,7 +248,7 @@ export class RecoComponent implements OnInit {
    */
   showCaseLaws(c: any, tpl){
     this.modalData.caseObj = c;
-    this.recoService.getCaseLaws(c.caseId).subscribe((res: any) => {
+    this.MjjdService.getCaseLaws(c.caseId).subscribe((res: any) => {
       if(res.code == 200){
         this.modalData.caselaws = res.data.caseLaws;
         this.openModal(tpl);
@@ -258,7 +258,7 @@ export class RecoComponent implements OnInit {
 
   showCaseRules(c: any , tpl){
     this.modalData.caseObj = c;
-    this.recoService.getCaseRules(c.caseKeys).subscribe((res: any) => {
+    this.MjjdService.getCaseRules(c.caseKeys).subscribe((res: any) => {
       this.modalData.caseRules = res.data.caseRules;
       this.openModal(tpl);
     })

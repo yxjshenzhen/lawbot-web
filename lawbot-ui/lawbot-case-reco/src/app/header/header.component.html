@@ -11,13 +11,16 @@
 					<a class="nav-link" *ngIf="n.url && n.subMenus" 
 							href="#" class="nav-link dropdown-toggle" 
 							data-toggle="dropdown" 
-							role="button" 
+							role="button"
 							aria-haspopup="true" 
 							aria-expanded="false">
 							{{n.title}}
 					</a>
 					<div *ngIf="n.subMenus" class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a *ngFor="let s of n.subMenus" class="dropdown-item" [href]="s.url">
+						<a *ngFor="let s of n.subMenus" class="dropdown-item" 
+							[ngClass]="{'active': s.title == menuselected}"
+							(click)="menuSelect(s.title)"
+							[href]="s.url">
 							{{s.title}}
 						</a>
 					</div>
