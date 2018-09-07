@@ -110,7 +110,6 @@ public class RuleServiceImpl implements RuleService {
 	@Override
 	public JSONObject fetchStat(JSONObject params) {
 		
-		
 		String str1 = "[{\"name\": \"西藏\", \"value\": 5},{\"name\": \"青海\", \"value\": 1},{\"name\": \"宁夏\", \"value\": 44},{\"name\": \"海南\", \"value\": 1},{\"name\": \"甘肃\", \"value\": 36},{\"name\": \"贵州\", \"value\": 7}," +
 				"{\"name\": \"新疆\", \"value\": 34},{\"name\": \"云南\", \"value\": 68},{\"name\": \"重庆\", \"value\": 42},{\"name\": \"吉林\", \"value\": 25},{\"name\": \"山西\", \"value\": 20},{\"name\": \"天津\", \"value\": 7}," + 
 				"{\"name\": \"江西\", \"value\": 96},{\"name\": \"广西\", \"value\": 9},{\"name\": \"陕西\", \"value\": 98},{\"name\": \"黑龙江\", \"value\": 44},{\"name\": \"内蒙古\", \"value\": 18},{\"name\": \"安徽\", \"value\": 189}," +
@@ -131,4 +130,60 @@ public class RuleServiceImpl implements RuleService {
 		return rs;
 	}
 
+	/*
+	 * 买卖合同
+	*/
+	public List<String> getCaseKeysMmht(Map<String, Object> params){
+	
+		if(!params.containsKey("case_content")) return null;
+		
+		return aiService.getCaseKeysMmht(params);
+	}
+	
+	@Override
+	public List<String> getCaseKeysOnCachedMmht(Map<String, Object> params) throws InterruptedException, ExecutionException {
+		if(!params.containsKey("case_content")) return null;
+		
+		String caseContent = params.get("case_content").toString();
+		return caseKeysLoader.load("CASEKYES_" + caseContent, (k) -> getCaseKeysMmht(params)).get();
+		//return caseKeysLoader.load("CASEKYES_" + caseContent, (k) -> getCaseKeys(params)).get();
+	}
+	
+	@Override
+	public List<Map> findWithLawByKeysMmht(List<String> keys) {
+		return ruleDao.findWithLawByKeysMmht(keys);
+	}
+	
+	public List<Map> findWithLawByKeysOnCachedMmht(List<String> keys) throws InterruptedException, ExecutionException{
+		String key = getCacheKey("CASELAW_", keys);
+		
+		return futureLoader.load(key, new FutureCachedRunnable<List<Map>>() {
+
+			@Override
+			public List<Map> run(String key) {
+				return findWithLawByKeys(keys);
+			}
+		}).get();
+	}
+	
+
+	@Override
+	public List<Map> findCaseLawByCaseIdMmht(long caseId) {
+		return ruleDao.findCaseLawByCaseIdMmht(caseId);
+	}
+	
+	public JSONObject findSameCasesMmht(List<String> keys){
+		JSONObject sameCases = new JSONObject();
+		sameCases.put("cases_leve1", findSameCasesMmht(keys, 1));
+		sameCases.put("cases_leve2", findSameCasesMmht(keys, 2));
+		sameCases.put("cases_leve3", findSameCasesMmht(keys, 3));
+		sameCases.put("cases_leve4", findSameCasesMmht(keys, 4));
+		return sameCases;
+	}
+	
+	private List<Map> findSameCasesMmht(List<String> keys , int courtLevel){
+		return ruleDao.findSameCaseByKeysMmht(keys, courtLevel);
+	}
+
+	
 }

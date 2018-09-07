@@ -31,6 +31,15 @@ public interface AIService {
 	List<String> getCaseKeys(@RequestBody Map<String,Object> params);
 	
 	/**
+	 * 获取关键因子
+	 * @param params {case_content: ""}
+	 * @return ["",""]
+	 */
+	@PostMapping(path = "get_case_keys_contract" , consumes = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	List<String> getCaseKeysMmht(@RequestBody Map<String,Object> params);
+	
+	/**
 	 * 获取法条
 	 * @param caseId
 	 * @return [{},{}]
