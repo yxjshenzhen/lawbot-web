@@ -94,3 +94,16 @@
 .contract label{
     line-height: 34px;
 }
+.chatbot{
+    position: fixed;
+    left: -15px;
+    top: 85px;
+    cursor: pointer;
+}
+.chatbot > img{
+    opacity: 0.5;
+    width: 160px;
+}
+.chatbot:hover > img {
+    opacity: 1;
+}
