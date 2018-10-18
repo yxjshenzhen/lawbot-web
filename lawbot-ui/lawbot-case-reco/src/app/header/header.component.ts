@@ -9,6 +9,7 @@ import { UserService } from "../common/service/user.service";
 export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService) { }
+  menuselected: String = null;
   nav: any = {
     title: '{LawBot}',
     menus: [{
@@ -16,7 +17,16 @@ export class HeaderComponent implements OnInit {
     },{
       title: '产品', url: '/#/product'
     },{
-      title: 'AI案件分析', url: '/reco/#/' ,active: true
+      title: 'AI案件分析', url: '/reco/#/', active: true,
+      subMenus: [
+        {title: '民间借贷', url: '/reco/#/mjjd'},
+        {title: '买卖合同', url: '/reco/#/mmht',},
+        {title: '金融、投资', url: '/reco/#/jrtz'},
+        {title: '知识产权', url: '/reco/#/zscq'},
+        {title: '诉讼、仲裁', url: '/reco/#/sszc'},
+        {title: '房地产', url: '/reco/#/fdc'},
+        {title: '海事物流', url: '/reco/#/hswl'}
+      ]
     },{
       title: '法律Chatbot', chatbot: true
     },{
@@ -45,10 +55,13 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
-
+  menuSelect(s: string){
+    this.menuselected = s;
+  }
   openLawbot(){
     var v5_chat_attrs	= "toolbar=0,scrollbars=0,location=0,menubar=0,resizable=1,top=" + (window.screen.availHeight - (window.screen.availHeight/2+275+40)) + ",left=" + (window.screen.availWidth - (window.screen.availWidth/2+365+20)) + ",width=730,height=550";
-    window.open('/chatbot/desk/kehu.html?site_id=123898', '_blank', v5_chat_attrs);
+    // window.open('/chatbot/desk/kehu.html?site_id=123898', '_blank', v5_chat_attrs);
+    window.open('http://desk.v5kf.com/desk/kehu.html?site_id=123898', '_blank', v5_chat_attrs);
   }
 }
 

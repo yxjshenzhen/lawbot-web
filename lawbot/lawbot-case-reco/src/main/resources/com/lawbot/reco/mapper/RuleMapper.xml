@@ -49,10 +49,15 @@
     </select>
     
     <select id="findCaseLawByCaseId" resultType="HashMap">
-    	SELECT t3.law_full_name,t2.index_name,t2.law_detail,t2.law_index FROM t_case_law t1 
+    	SELECT 
+    		t3.law_full_name,
+    		t2.index_name,
+    		t2.law_detail,
+    		t2.law_index 
+    	FROM t_case_law t1 
 			LEFT JOIN s_law_detail t2 ON t1.`detail_id` = t2.`detail_id`
 			LEFT JOIN s_law_info t3 ON t2.`law_id` = t3.`law_id`
-		WHERE t1.case_id = #{caseId} ORDER BY t3.law_full_name,t2.law_index;
+		WHERE t1.case_id = #{caseId} ORDER BY t3.law_full_name,t2.law_index
     </select>
     <select id="findSameCaseByKeys" resultMap="SameCaseMap">		
 		SELECT
@@ -105,5 +110,74 @@
     <select id="findCaseCourtLevelStats" resultType="HashMap">
     	
     </select>
+    
+    <select id="findWithLawByKeysMmht" resultMap="RuleMap">
+		SELECT
+			t3.*
+		FROM
+			s_key_info_contract t1
+			JOIN t_rule_key_contract t2 ON t1.key_id = t2.key_id
+			JOIN v_rule_detail_contract t3 ON t2.rule_id = t3.rule_id 
+		WHERE
+			t1.key_content IN <foreach collection="caseKeys" item="key" open="(" close=")" separator=",">#{key}</foreach>
+	</select>
+	
+	<select id="findCaseLawByCaseIdMmht" resultType="HashMap">
+		SELECT 
+			t3.law_full_name,
+			t2.index_name,
+			t2.law_detail,
+			t2.law_index 
+		FROM 
+			t_case_law_contract t1 
+		LEFT JOIN s_law_detail t2 ON t1.`detail_id` = t2.`detail_id`
+		LEFT JOIN s_law_info t3 ON t2.`law_id` = t3.`law_id`
+		WHERE t1.case_id = #{caseId} ORDER BY t3.law_full_name,t2.law_index;
+	</select>
+	
+	<select id="findSameCaseByKeysMmht" resultMap="SameCaseMap">		
+		SELECT
+			t5.case_id,
+			t5.case_date,
+			t5.case_name,
+			t5.case_content,
+			t5.court_hear,
+			t5.court_decision,
+			t7.key_content 
+		FROM
+		(
+		SELECT
+			t3.case_id 
+		FROM
+			(
+			SELECT
+				t1.case_id,
+				COUNT( * ) / t1.case_key_count AS passrate,
+				COUNT( * ) AS match_count 
+			FROM
+				t_case_key_contract t1
+				JOIN (
+				SELECT
+					key_id 
+				FROM
+					s_key_info_contract 
+				WHERE
+					key_content IN <foreach collection="caseKeys" item="key" open="(" close=")" separator=",">#{key}</foreach>  
+				) t2 ON t1.key_id = t2.key_id 
+			WHERE
+				t1.court_level = #{courtLevel} 
+			GROUP BY
+				t1.case_id,
+				t1.case_key_count 
+			) t3 
+		ORDER BY
+			t3.match_count DESC,
+			t3.passrate DESC 
+			LIMIT 5 
+		) t4
+		JOIN s_case_info_contract t5 ON t4.case_id = t5.case_id
+		JOIN t_case_key_contract t6 ON t4.case_id = t6.case_id
+		JOIN s_key_info_contract t7 ON t6.key_id = t7.key_id
+	</select>
     
 </mapper>

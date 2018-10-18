@@ -13,16 +13,25 @@ import { HomeComponent } from "./home/home.component";
 
 import { HomeService } from "./home/home.service";
 import { UserService } from "./common/service/user.service";
-import { RecoService } from "./buss/reco.service";
+import { MjjdService } from "./buss/mjjd/mjjd.service";
+import { MmhtService } from "./buss/mmht/mmht.service";
 import { LoadingComponent } from './common/loading/loading.component';
-import { RecoComponent } from './buss/reco/reco.component';
+import { MjjdComponent } from './buss/mjjd/mjjd.component';
 import { DialogComponent } from './common/component/dialog.component';
+import { MmhtComponent } from './buss/mmht/mmht.component';
 
 const appRoutes: Routes = [
   { 
-    path: '', redirectTo: 'mjjd' , pathMatch: 'full'
-  },
-  {
+    path: '', 
+    redirectTo: 'mjjd' , 
+    pathMatch: 'full'
+  },{
+    path: 'mjjd',
+    component: MjjdComponent
+  },{
+    path: 'mmht',
+    component: MmhtComponent
+  },{
     path: ':caseType', component: HomeComponent
   }
 ];
@@ -34,8 +43,9 @@ const appRoutes: Routes = [
     FooterComponent,
     HomeComponent,
     LoadingComponent,
-    RecoComponent,
+    MjjdComponent,
     DialogComponent,
+    MmhtComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +64,8 @@ const appRoutes: Routes = [
   providers: [
     HomeService,
     UserService,
-    RecoService
+    MjjdService,
+    MmhtService
   ],
   entryComponents: [
     DialogComponent

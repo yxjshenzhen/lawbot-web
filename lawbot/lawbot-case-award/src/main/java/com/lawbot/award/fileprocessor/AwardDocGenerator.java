@@ -10,7 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -116,7 +119,7 @@ public class AwardDocGenerator extends DocGenerator {
                 appEvidenceList,
                 respondConent,
                 resEvidenceList);
-//        generateSignaturePage();
+        generateSignaturePage();
         try {
             int lastIdx1 = outAwardDocUrl.lastIndexOf("/");
             int lastIdx2 = outAwardDocUrl.lastIndexOf("\\");
@@ -432,27 +435,163 @@ public class AwardDocGenerator extends DocGenerator {
         }
 
         addSubTitle("二、仲裁庭意见");
-        addNormalTextParagraph("就本案争议，仲裁庭意见如下：", 1);
+//        addNormalTextParagraph("就本案争议，仲裁庭意见如下：", 1);
 //        addNormalTextParagraph("{意见描述部分}", 0);
-
+        addNormalTextParagraph("仲裁庭根据申请人的仲裁请求和被申请人的答辩意见，结合本案的证据，审查了一下争议事实和法律问题。", 0);
+        addNormalTextParagraph("（一）关于本案的管辖权", 0);
+        addNormalTextParagraph("仲裁庭审查了申请人与被申请人与       年   月   日签订的《      合同》后，认为上述合同是对双方当事人具有约束力的文件，且上述《     合同》的第       条载有本会仲裁解决纠纷的规定，因此仲裁庭认为本会对本案享有管辖权。", 0);
+        addNormalTextParagraph("（二）关于本案实体法律适用问题", 0);
+        addNormalTextParagraph("", 0);
+        addNormalTextParagraph("（三）关于本案相关事实的认定", 0);
+        addNormalTextParagraph("根据申请人提交的证据材料和庭审调查，仲裁庭对有关本案争议的相关事实认定如下：", 0);
+        addNormalTextParagraph("1.", 1);
+        addNormalTextParagraph("2.", 1);
+        addNormalTextParagraph("3.", 1);
+        addNormalTextParagraph("", 0);
+        addNormalTextParagraph("（四）关于本案的争议焦点", 0);
+        addNormalTextParagraph("1.", 1);
+        addNormalTextParagraph("2.", 1);
+        addNormalTextParagraph("3.", 1);
+        addNormalTextParagraph("", 0);
+        addNormalTextParagraph("（五）被申请人是否存在违约责任", 0);
+        addNormalTextParagraph("1.", 1);
+        addNormalTextParagraph("2.", 1);
+        addNormalTextParagraph("3.", 1);
+        addNormalTextParagraph("", 0);
+        
+//        List<Map<String,String>> strColorList1 = new ArrayList<>();
+//        Map<String,String> m1 = new HashMap<>();
+//        m1.put("str", "（六）关于申请人提出的要求");
+//        m1.put("color", "2e74b5");
+//        strColorList1.add(m1);
+//        addMultiColorTextParagraph(strColorList1, 0);
+    	addNormalTextParagraph("（六）申请人是否存在过错", 0);
+        addNormalTextParagraph("1.", 1);
+        addNormalTextParagraph("2.", 1);
+        addNormalTextParagraph("3.", 1);
+        addNormalTextParagraph("", 0);
+        
+        addNormalTextParagraph("（七）关于申请人提出的要求", 0, "2e74b5");
+        
+        addNormalTextParagraph("1.", 1, "2e74b5");
+        addNormalTextParagraph("2.", 1, "2e74b5");
+        addNormalTextParagraph("3.", 1, "2e74b5");
+        addNormalTextParagraph("", 0);
+        
+        addNormalTextParagraph("（八）关于被申请人的仲裁反请求（如有反请求）", 0, "2e74b5");
+        addNormalTextParagraph("1.", 1, "2e74b5");
+        addNormalTextParagraph("2.", 1, "2e74b5");
+        addNormalTextParagraph("3.", 1, "2e74b5");
+        addNormalTextParagraph("", 0);
+        addNormalTextParagraph("（九）被申请人缺席的后果（如果缺席审理）", 0);
+        addNormalTextParagraph("被申请人经合法通知无正当理由未到庭，亦未提交任何书面答辩意见或证据，视为自行放弃抗辩的权利，应自行承担由此引起的法律后果。", 0);
+        addNormalTextParagraph("", 0);
+        addNormalTextParagraph("（十）关于公证费、差旅费、检验费、律师费及仲裁费的问题", 0);
+        addNormalTextParagraph("申请人请求仲裁庭裁决被申请人赔偿申请人因本案而产生的公证费、差旅费、检验费、律师费及仲裁费等合理费用。仲裁庭认为，申请人提交了上述费用的付款凭证，以证明其实际支出，该等费用均为申请人为保护其合法权益所产生的费用，故仲裁庭予以支持。", 0);
+        addNormalTextParagraph("根据《仲裁规则》第六十六条的规定，本案仲裁费、仲裁员实际开支费用应由被申请人承担。", 0);
+        
         addSubTitle("三、裁    决");
         addNormalTextParagraph("根据上述事实和仲裁庭意见，仲裁庭对本案作出裁决如下：", 0);
+        addNormalTextParagraph("（一）被申请人应向申请人支付尚欠借款人民币               元。", 0);
+      	addNormalTextParagraph("（二）被申请人应向申请人支付利息人民币               元。", 0);
+      	addNormalTextParagraph("（三）被申请人应向申请人支付律师费人民币               元。", 0);
+      	
+      	List<Map<String,String>> strColorList1 = new ArrayList<>();
+        Map<String,String> m11 = new HashMap<>();
+        m11.put("str", "（四）本案仲裁费人民币              元，由被申请人承担");
+        
+        Map<String,String> m12 = new HashMap<>();
+        m12.put("str", "/由申请人承担       %，即人民币               元，被申请人承担      %，即人民币               元。");
+        m12.put("color", "2e74b5");
+        
+        Map<String,String> m13 = new HashMap<>();
+        m13.put("str", "申请人已足额预缴的人民币              元，抵作本案仲裁费不予退回，被申请人应直接向申请人支付人民币               元。");
+        
+        strColorList1.add(m11);
+        strColorList1.add(m12);
+        strColorList1.add(m13);
+        addMultiColorTextParagraph(strColorList1, 0);
+        
+//      	addNormalTextParagraph("（四）本案仲裁费人民币               元。应由被申请人承担",
+//      			"/由申请人承担       %，即人民币               元，被申请人承担      %，即人民币               元。",
+//      			"。申请人已预缴本案仲裁费人民币               元。直接抵作本案仲裁费用不予退回，被申请人应直接向申请人支付人民币               元。", 0);
+        
+        List<Map<String,String>> strColorList2 = new ArrayList<>();
+        Map<String,String> m21 = new HashMap<>();
+        m21.put("str", "本案仲裁员实际开支人民币               元，由被申请人承担/由");
+        
+        Map<String,String> m22 = new HashMap<>();
+        m22.put("str", "申请人承担       %，即人民币               元，被申请人承担       %，即人民币               元。");
+        m22.put("color", "2e74b5");
+        
+        Map<String,String> m23 = new HashMap<>();
+        m23.put("str", "申请人预缴的人民币               元，与其应承担的仲裁员实际开支相抵后，余款人民币元由仲裁院退还给申请人；被申请人预缴的人民币               元，与其应承担的仲裁员实际开支相抵后，余款人民币元由仲裁院退还给被申请人。");
+        
+        strColorList2.add(m21);
+        strColorList2.add(m22);
+        strColorList2.add(m23);
+        addMultiColorTextParagraph(strColorList2, 0);
+        
+//      	addNormalTextParagraph("本案仲裁员实际开支人民币元，由被申请人承担/由",
+//      			"申请人承担 %，即人民币元，被申请人承担 %，即人民币元。",
+//      			"申请人预缴的人民币元，与其应承担的仲裁员实际开支相抵后，余款人民币元由仲裁院退还给申请人；被申请人预缴的人民币元，与其应承担的仲裁员实际开支相抵后，余款人民币元由仲裁院退还给被申请人。",
+//      			0);
+      	addNormalTextParagraph("（五）驳回申请人的其他仲裁请求。", 0, "2e74b5");
+      	addNormalTextParagraph("（六）驳回被申请人的仲裁反请求/其他仲裁反请求。", 0, "2e74b5");
+      	addNormalTextParagraph("", 0);
+      	
+      	List<Map<String,String>> strColorList3 = new ArrayList<>();
+        Map<String,String> m31 = new HashMap<>();
+        m31.put("str", "以上确定的各项应付款项");
+        
+        Map<String,String> m32 = new HashMap<>();
+        m32.put("str", "/应履行义务");
+        m32.put("color", "2e74b5");
+        
+        Map<String,String> m33 = new HashMap<>();
+        m33.put("str", "，被申请人应在本裁决作出之日起");
+        
+        Map<String,String> m34 = new HashMap<>();
+        m34.put("str", "（      ）");
+        m34.put("color", "2e74b5");
+        
+        Map<String,String> m35 = new HashMap<>();
+        m35.put("str", "日内支付完毕");
+        
+        Map<String,String> m36 = new HashMap<>();
+        m36.put("str", "/履行完毕。");
+        m36.put("color", "2e74b5");
+        
+        strColorList3.add(m31);
+        strColorList3.add(m32);
+        strColorList3.add(m33);
+        strColorList3.add(m34);
+        strColorList3.add(m35);
+        strColorList3.add(m36);
+        addMultiColorTextParagraph(strColorList3, 1);
+//      	addNormalTextParagraph("以上确定的各项应付款项",
+//      			"/应履行义务",
+//      			"，被申请人应在本裁决作出之日起",
+//      			"（      ）",
+//      			"日内支付完毕",
+//      			"/履行完毕", 0);
+//      	addNormalTextParagraph("", 0);
 //        addNormalTextParagraph("{裁决描述部分}", 2);
-
-        addNormalTextParagraph("本裁决为终局裁决。", 0);
+        addNormalTextParagraph("本裁决为终局裁决，自作出之日起生效。", 0);
         addNormalTextParagraph("（紧接下一页）", 0);
 
         breakToNextPage();
     }
 
     private void generateSignaturePage() {
-        addNormalTextParagraph("（此页无正文）", 4);
+        addNormalTextParagraph("（此页无正文）", 0);
 
         addSignatureText("首席仲裁员：");
         addSignatureText("仲  裁  员：");
         addSignatureText("仲  裁  员：");
 
-        addSignatureDate(cnDateGenerator() + "于深圳");
+//        addSignatureDate(cnDateGenerator() + "于深圳");
+        addSignatureDate("年     月     日 " + "于深圳");
     }
 
     private void addNumbering(String[] strList, int emptyLineInBetween, int emptyLineAfter) {
@@ -543,10 +682,86 @@ public class AwardDocGenerator extends DocGenerator {
         }
     }
 
+    private void addTextParagraph(String str, int emptyLineAfter, boolean bold, String color) {
+        XWPFParagraph paragraph = awardDoc.createParagraph();
+
+        CTPPr ppr = paragraph.getCTP().getPPr();
+        if (ppr == null) {
+            ppr = paragraph.getCTP().addNewPPr();
+        }
+        CTSpacing spacing = ppr.isSetSpacing() ? ppr.getSpacing() : ppr.addNewSpacing();
+        spacing.setBefore(BigInteger.valueOf(0L));
+        spacing.setAfter(BigInteger.valueOf(0L));
+        spacing.setLineRule(STLineSpacingRule.EXACT);
+        spacing.setLine(TEXT_LINE_SPACING);
+
+        paragraph.setAlignment(ParagraphAlignment.BOTH);
+        paragraph.setFirstLineIndent(CN_FONT_SIZE_SAN * 2 * 20);
+        XWPFRun run = paragraph.createRun();
+        run.setFontFamily(FONT_FAMILY_FANGSONG);
+        run.getCTR().getRPr().getRFonts().setAscii(FONT_FAMILY_TIME_NEW_ROMAN);
+        run.getCTR().getRPr().getRFonts().setHAnsi(FONT_FAMILY_TIME_NEW_ROMAN);
+        run.getCTR().getRPr().getRFonts().setEastAsia(FONT_FAMILY_FANGSONG);
+        run.setFontSize(CN_FONT_SIZE_SAN);
+        run.setColor(color);
+        run.setBold(bold);
+        run.setText(str);
+        for (int i = 0; i < emptyLineAfter; ++i) {
+            run.addBreak();
+        }
+    }
+        
+    private void addTextParagraph(List<Map<String,String>> strList, int emptyLineAfter, boolean bold) {
+        if(strList.size() > 0){
+        	XWPFParagraph paragraph = awardDoc.createParagraph();
+
+            CTPPr ppr = paragraph.getCTP().getPPr();
+            if (ppr == null) {
+                ppr = paragraph.getCTP().addNewPPr();
+            }
+            CTSpacing spacing = ppr.isSetSpacing() ? ppr.getSpacing() : ppr.addNewSpacing();
+            spacing.setBefore(BigInteger.valueOf(0L));
+            spacing.setAfter(BigInteger.valueOf(0L));
+            spacing.setLineRule(STLineSpacingRule.EXACT);
+            spacing.setLine(TEXT_LINE_SPACING);
+
+            paragraph.setAlignment(ParagraphAlignment.BOTH);
+            paragraph.setFirstLineIndent(CN_FONT_SIZE_SAN * 2 * 20);
+            for(Map<String,String> m: strList){
+            	 XWPFRun run = paragraph.createRun();
+                 run.setFontFamily(FONT_FAMILY_FANGSONG);
+                 run.getCTR().getRPr().getRFonts().setAscii(FONT_FAMILY_TIME_NEW_ROMAN);
+                 run.getCTR().getRPr().getRFonts().setHAnsi(FONT_FAMILY_TIME_NEW_ROMAN);
+                 run.getCTR().getRPr().getRFonts().setEastAsia(FONT_FAMILY_FANGSONG);
+                 run.setFontSize(CN_FONT_SIZE_SAN);
+                 if(m.get("color") != null && !m.get("color").equals("")){
+                	 run.setColor(m.get("color"));
+                 }
+                 if(m.get("str") != null && !m.get("str").equals("")){
+                	 run.setText(findAndCorrectMoneyFormats(m.get("str")));
+                 }
+                 run.setBold(bold);
+            }
+            for (int i = 0; i < emptyLineAfter; ++i) {
+            	XWPFRun run = paragraph.createRun();
+            	run.setText("");
+                run.addBreak();
+            }
+        }
+    }
+    
     private void addNormalTextParagraph(String str, int emptyLineAfter) {
         addTextParagraph(findAndCorrectMoneyFormats(str), emptyLineAfter, false);
     }
 
+    private void addNormalTextParagraph(String str, int emptyLineAfter, String color) {
+        addTextParagraph(findAndCorrectMoneyFormats(str), emptyLineAfter, false, color);
+    }
+    
+    private void addMultiColorTextParagraph(List<Map<String,String>> strList, int emptyLineAfter){
+    	addTextParagraph(strList, emptyLineAfter, false);
+    }
+    
     private void addNormalTextParagraphs(String str, int emptyLineInBetween, int emptyLineAfter) {
         String lines[] = str.split("\\r?\\n");
         for (int i = 0; i < lines.length; ++i) {

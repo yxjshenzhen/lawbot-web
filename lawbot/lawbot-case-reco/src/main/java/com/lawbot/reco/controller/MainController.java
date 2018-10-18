@@ -48,7 +48,6 @@ public class MainController {
 			logger.error(e.getMessage());
 			return Result.error(ResultCode.UNKNOW_ERROR);
 		}
-
 	}
 	
 	@GetMapping("case-laws/{caseId}")
@@ -88,4 +87,43 @@ public class MainController {
 		return Result.success(new Result.ResultData("stats" , ruleService.fetchStat(params)));
 		
 	}
+	
+	//mmht
+	@PostMapping("case-keys-mmht")
+	public Result calcFactorMmht(@RequestBody(required = true) Map<String, Object> params){
+		List<String> factors;
+		try {
+			factors = ruleService.getCaseKeysOnCachedMmht(params);
+			return Result.success(new Result.ResultData("caseKeys", factors));
+		} catch (InterruptedException | ExecutionException e) {
+			logger.error(e.getMessage());
+			return Result.error(ResultCode.UNKNOW_ERROR);
+		}
+	}
+	
+	@PostMapping("case-rules-mmht")
+	public Result getCaseRulesMmht(@RequestBody(required = true) Map<String,Object> params){
+		if(params.containsKey("keys") && params.get("keys") instanceof List){
+			return Result.success(new Result.ResultData("caseRules",ruleService.findWithLawByKeysMmht((List)params.get("keys"))));
+		}
+		return Result.error(ResultCode.REQUEST_PARAMS_ERROR);
+	}
+	
+	@GetMapping("case-laws-mmht/{caseId}")
+	public Result getCaseLawsMmht(@PathVariable(required = true) long caseId){
+		return Result.success(new Result.ResultData("caseLaws", ruleService.findCaseLawByCaseIdMmht(caseId)));
+	}
+	
+	@PostMapping("case-same-mmht")
+	public Result getSameCasesMmht(@RequestBody(required = true) Map<String,Object> params){
+		if(params.containsKey("keys") && params.get("keys") instanceof List){
+			List<String> keys = (List<String>) params.get("keys");
+			JSONObject sameCases;
+			sameCases = ruleService.findSameCasesMmht(keys);
+			return Result.success(new Result.ResultData("sameCases" ,sameCases));
+		}
+		return Result.error(ResultCode.REQUEST_PARAMS_ERROR);
+	}
+	
+	
 }

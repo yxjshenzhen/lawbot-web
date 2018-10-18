@@ -26,8 +26,20 @@ public interface RuleService {
 	JSONObject findSameCases(List<String> keys);
 	
 	JSONObject findSameCasesOnCached(List<String> keys) throws InterruptedException, ExecutionException;
-	
-	
+		
 	JSONObject fetchStat(JSONObject params);
 
+	//mmht
+	
+	List<String> getCaseKeysMmht(Map<String,Object> params);
+	
+	List<String> getCaseKeysOnCachedMmht(Map<String, Object> params) throws InterruptedException, ExecutionException;
+
+	List<Map> findWithLawByKeysMmht(List<String> keys);
+	
+	List<Map> findWithLawByKeysOnCachedMmht(List<String> keys) throws InterruptedException, ExecutionException;
+	
+	List<Map> findCaseLawByCaseIdMmht(long caseId);
+	
+	JSONObject findSameCasesMmht(List<String> keys);
 }

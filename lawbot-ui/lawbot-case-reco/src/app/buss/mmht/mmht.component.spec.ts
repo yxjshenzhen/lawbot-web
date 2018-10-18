@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecoComponent } from './reco.component';
+import { MmhtComponent } from './mmht.component';
 
-describe('RecoComponent', () => {
-  let component: RecoComponent;
-  let fixture: ComponentFixture<RecoComponent>;
+describe('MmhtComponent', () => {
+  let component: MmhtComponent;
+  let fixture: ComponentFixture<MmhtComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecoComponent ]
+      declarations: [ MmhtComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecoComponent);
+    fixture = TestBed.createComponent(MmhtComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
