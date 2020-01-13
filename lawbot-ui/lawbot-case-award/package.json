@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4202 --proxy-config proxy.conf.json --host 127.0.0.1 --base-href=/award/",
+    "dev": "ng serve --port 4202 --base-href=/award/",
     "build": "ng build --prod --base-href=/award/",
     "test": "ng test",
     "lint": "ng lint",
