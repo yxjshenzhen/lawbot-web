@@ -9,7 +9,8 @@
     "build": "ng build --prod --base-href=/award/",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:zip": "npm run build && zip -r lawbot-case-award-ui.zip ./dist"
   },
   "private": true,
   "dependencies": {
